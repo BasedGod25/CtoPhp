@@ -1,5 +1,5 @@
 <?php
-	internal class Config
+	class Config
     {
         $holidays[];
         $count = 0;
