@@ -1,15 +1,15 @@
 ﻿<?php
   class Load
     {
-        $countOfTypes = 31;
-        $countOfSubjects = 0;
-        $z = array(64, 64);
-        $names = array(64);
-        $spect = array(64);
-        $courses = array(64);
+        public $countOfTypes = 31;
+        public $countOfSubjects = 0;
+        public $z = array(64, 64);
+        public $names = array(64);
+        public $spect = array(64);
+        public $courses = array(64);
 
-        $name_of_lecturer = "";
-        $isAutumn = true;
+        public  $name_of_lecturer = "";
+        public $isAutumn = true;
 
         function Load($is_autumn)
         {

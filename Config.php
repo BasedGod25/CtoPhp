@@ -1,22 +1,27 @@
 <?php
 	class Config
     {
-        $holidays[];
-        $count = 0;
+        public $holidays=array();
+        public $count = 0;
 
-        $changes[,];
-        $count_changes = 0;
+        public $changes=array();
+        public $count_changes = 0;
 
-        $s1 = new DateTime();
-        $s1->setDate(date("Y"), 9, 1);
-        $e1 = new DateTime();
-        $e1->setDate(date("Y"), 12, 31);
-        $s4 = new DateTime();
-        $s4->setDate(date("Y"), 9, 1);
-        $e4 = new DateTime();
-        $e4->setDate(date("Y"), 12, 31);
+        public $s1;// = new DateTime();
+        public $e1;// = new DateTime();
+        public $s4;// = new DateTime();
+        public $e4;// = new DateTime();
+        
 
         $autumnSemestr = false;
+
+        function __construct()
+        {
+            $s1->setDate(date("Y"), 9, 1);
+            $e1->setDate(date("Y"), 12, 31);
+            $s4->setDate(date("Y"), 9, 1);
+            $e4->setDate(date("Y"), 12, 31);        
+        }
 
         function LoadFromFile($fileName)
         {

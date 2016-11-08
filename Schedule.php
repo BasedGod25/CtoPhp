@@ -1,16 +1,16 @@
 <?php
     class Day
     {
-        $countOfDisciplines = 0;
-        $hour = array(32);
-        $spec = array(32);
-        $disc = array(32);
-        $kurs = array(32);
-        $typs = array(32);
-        $pair = array(32);
+        public $countOfDisciplines = 0;
+        public $hour = array(32);
+        public $spec = array(32);
+        public $disc = array(32);
+        public $kurs = array(32);
+        public $typs = array(32);
+        public $pair = array(32);
 
-        $starts = array(32);
-        $ends = array(32);
+        public $starts = array(32);
+        public $ends = array(32);
 
         function __construct()
         {

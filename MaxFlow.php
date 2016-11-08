@@ -3,17 +3,17 @@
     class MaxFlow
     { 
         include 'Graph.php';
-        const $inf = 1000000000;
-        const $MAX = 2048;
-        $p[$MAX];
-        $flag[$MAX];
-        $D[$MAX];
-        $dist[$MAX];
+        public const inf = 1000000000;
+        public const MAX = 2048;
+        public $p = array($MAX);
+        public $flag = array($MAX);
+        public $D = array($MAX);
+        public $dist = array($MAX);
 
         
-        $G = new Graph();
+        public $G = new Graph();
 
-        function MaxFlow($DG)
+        function __construct($DG)
         {
             $G = new Graph();
             $G = $DG;
