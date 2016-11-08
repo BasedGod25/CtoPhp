@@ -17,7 +17,7 @@
             $countOfDisciplines = 0;
         }
         
-        function addDisc($hours, $speciality, $typ, $name, $kurs1, $when, $strt, $end)
+        function addDisc($hours, $speciality, $typ, $name, $kurs1, $$when, $strt, $end)
         {
 
             if (strrpos($name, ":"))
@@ -28,7 +28,7 @@
             $typs[$countOfDisciplines] = $typ;
             $disc[$countOfDisciplines] = $name;
             $kurs[$countOfDisciplines] = $kurs1;
-            $pair[$countOfDisciplines] = $when;
+            $pair[$countOfDisciplines] = $$when;
             $starts[$countOfDisciplines] = $strt;
             $ends[$countOfDisciplines] = $end;
             $spec[$countOfDisciplines++] = $speciality;
@@ -38,7 +38,7 @@
         function Remove($index)
         {
             if ($index < 0) return;
-            for ($i = $index; $i < $countOfDisciplines - 1; $i++)
+            for ($i = $index; $$i < $countOfDisciplines - 1; $$i++)
             {
                 $hour[$i] = $hour[$i + 1];
                 $typs[$i] = $typs[$i + 1];
@@ -101,171 +101,173 @@
 
     class Schedule
     {
-        private Day[] denominator = new Day[8];
-        private Day[] numerator = new Day[8];
+        $denominator = array(8);
+        $numerator = array(8);
 
-        public Schedule()
+        function __construct()
         {
-            for (int i = 0; i < 8; i++)
+            for ($i = 0; $$i < 8; $$i++)
             {
-                numerator[$i] = new Day();
-                denominator[$i] = new Day();
+                $numerator[$i] = new Day();
+                $denominator[$i] = new Day();
             }
         }
 
-        public Day getNumeratorDay(int day_of_week)
+        function getNumeratorDay($day_of_week)
         {
-            return numerator[day_of_week];
+            return $numerator[$day_of_week];
         }
 
-        public Day getDenominatorDay(int day_of_week)
+        function getDenominatorDay($day_of_week)
         {
-            return denominator[day_of_week];
+            return $denominator[$day_of_week];
         }
 
         //is_numerator: 0 - числитель, 1 - знаменатель, 2 - то и другое
-        public void addDiscipline(int day_of_week, double hours, string speciality, int is_numerator, int typ, string disc, string kurs, int when, DateTime strt, DateTime end)
+        function addDiscipline($day_of_week, $hours, $speciality, $is_numerator, $typ, $disc, $kurs, $$when, $strt, $end)
         {
-            if (speciality == null) return;
-            switch (is_numerator)
+            if ($speciality == null) return;
+            switch ($is_numerator)
             {
                 case 0:
                     {
-                        numerator[day_of_week].addDisc(hours, speciality, typ, disc, kurs, when, strt, end);
+                        $numerator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $$when, $strt, $end);
                     } break;
                 case 1:
                     {
-                        denominator[day_of_week].addDisc(hours, speciality, typ, disc, kurs, when, strt, end);
+                        $denominator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $$when, $strt, $end);
                     } break;
                 case 2:
                     {
-                        numerator[day_of_week].addDisc(hours, speciality, typ, disc, kurs, when, strt, end);
-                        denominator[day_of_week].addDisc(hours, speciality, typ, disc, kurs, when, strt, end);
+                        $numerator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $$when, $strt, $end);
+                        $denominator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $$when, $strt, $end);
                     } break;
             }
         }
 
-        private string getSpec(string S)
+        function getSpec($S)
         {
-            string temp = "";
-            for (int i = 0; i < S.Length; i++)
+            $temp = "";
+            for ($i = 0; $$i < strlen($S); $$i++)
             {
-                if (S[$i] == ';') break;
-                temp = temp + S[$i];
+                if ($S[$i] == ';') break;
+                $temp = $temp + $S[$i];
             }
-            return temp;
+            return $temp;
         }
 
-        private string getDisc(string S)
+        function getDisc($S)
         {
-            string temp = "";
-            int flag = 0;
-            for (int i = 0; i < S.Length; i++)
+            $temp = "";
+            $flag = 0;
+            for ($i = 0; $$i < strlen($S); $$i++)
             {
-                if (S[$i] == ';') flag++;
-                if (flag == 2 && S[$i] != ';') temp = temp + S[$i];
+                if ($S[$i] == ';') $flag++;
+                if ($flag == 2 && $S[$i] != ';') $temp = $temp + $S[$i];
             }
-            return temp;
+            return $temp;
         }
 
-        private string getKurs(string S)
+        function getKurs($S)
         {
-            string temp = "";
-            int flag = 0;
-            for (int i = 0; i < S.Length; i++)
+            $temp = "";
+            $flag = 0;
+            for ($i = 0; $i < strlen($S); $i++)
             {
-                if (S[$i] == ';') flag++;
-                if (flag == 3 && S[$i] != ';') temp = temp + S[$i];
+                if ($S[$i] == ';') $flag++;
+                if ($flag == 3 && $S[$i] != ';') $temp = $temp + $S[$i];
             }
-            return temp;
+            return $temp;
         }
 
-        private int getType(string S)
+        function getType($S)
         {
-            string temp = "";
-            int flag = 0;
-            for (int i = 0; i < S.Length; i++)
+            $temp = "";
+            $flag = 0;
+            for ($i = 0; $i < strlen($S); $i++)
             {
-                if (S[$i] == ';') flag++;
-                if (flag == 1 && S[$i] != ';') temp = temp + S[$i];
+                if ($S[$i] == ';') $flag++;
+                if ($flag == 1 && $S[$i] != ';') $temp = $temp + $S[$i];
             }
             if (temp.Length == 0) temp = S;
-            return Convert.ToInt32(temp);
+            return intval($temp);
         }
 
-        private DateTime getStart(String S)
+        function getStart($S)
         {
-            string temp = "";
-            int flag = 0;
-            for (int i = 0; i < S.Length; i++)
+            $temp = "";
+            $flag = 0;
+            for ($i = 0; $i < strlen($S); $i++)
             {
-                if (S[$i] == ';') flag++;
-                if (flag == 4 && S[$i] != ';') temp = temp + S[$i];
+                if ($S[$i] == ';') $flag++;
+                if ($flag == 4 && $S[$i] != ';') $temp = $temp + $S[$i];
             }
-            return Convert.ToDateTime(temp);
+            //date?
+            return ($temp);
         }
 
-        private DateTime getEnd(String S)
+        function getEnd($S)
         {
-            string temp = "";
-            int flag = 0;
-            for (int i = 0; i < S.Length; i++)
+            $temp = "";
+            $flag = 0;
+            for ($i = 0; $i < strlen($S); $i++)
             {
-                if (S[$i] == ';') flag++;
-                if (flag == 5 && S[$i] != ';') temp = temp + S[$i];
+                if ($S[$i] == ';') $flag++;
+                if ($flag == 5 && $S[$i] != ';') $temp = $temp + $S[$i];
             }
-            return Convert.ToDateTime(temp);
+            //date?
+            return ($temp);
         }
 
-        private int determineType(String sid)
+        function determineType($sid)
         {
-            if (sid == "Лекция") return 8;
-            if (sid == "Практика") return 10;
-            if (sid == "Лабораторная работа") return 12;
-            if (sid == "Консультация") return 19;
+            if ($sid == "Лекция") return 8;
+            if ($sid == "Практика") return 10;
+            if ($sid == "Лабораторная работа") return 12;
+            if ($sid == "Консультация") return 19;
             return 0;
         }
 
-        public void LoadFromXML(string fileName)
+        function LoadFromXML(string fileName)
         {
-            XmlReader xr = new XmlTextReader(new FileStream(fileName, FileMode.Open));
-            while (xr.Read())
+            $xr=new XMLReader();
+            $xr->open($fileName);
+            $while ($xr->read())
             {
-                if (xr.AttributeCount > 0)
+                if ($xr->attributeCount > 0)
                 {
-                    int dw = 0;
-                    if (xr.GetAttribute("time").Substring(0, 3) == "mon") dw = 1;
-                    if (xr.GetAttribute("time").Substring(0, 3) == "tue") dw = 2;
-                    if (xr.GetAttribute("time").Substring(0, 3) == "wed") dw = 3;
-                    if (xr.GetAttribute("time").Substring(0, 3) == "thr") dw = 4;
-                    if (xr.GetAttribute("time").Substring(0, 3) == "fri") dw = 5;
-                    if (xr.GetAttribute("time").Substring(0, 3) == "sat") dw = 6;
-                    int wh = 0;
-                    if (xr.GetAttribute("time").Substring(4, 2) == "8_") wh = 1;
-                    if (xr.GetAttribute("time").Substring(4, 2) == "9_") wh = 2;
-                    if (xr.GetAttribute("time").Substring(4, 2) == "11") wh = 3;
-                    if (xr.GetAttribute("time").Substring(4, 2) == "13") wh = 4;
-                    if (xr.GetAttribute("time").Substring(4, 2) == "15") wh = 5;
-                    if (xr.GetAttribute("time").Substring(4, 2) == "16") wh = 6;
-                    if (xr.GetAttribute("time").Substring(4, 2) == "18") wh = 7;
+                    $$dw = 0;
+                    if (substr($xr->getAttribute("time"), 0, 3) == "mon") $dw = 1;
+                    if (substr($xr->getAttribute("time"), 0, 3) == "tue") $dw = 2;
+                    if (substr($xr->getAttribute("time"), 0, 3) == "wed") $dw = 3;
+                    if (substr($xr->getAttribute("time"), 0, 3) == "thr") $dw = 4;
+                    if (substr($xr->getAttribute("time"), 0, 3) == "fri") $dw = 5;
+                    if (substr($xr->getAttribute("time"), 0, 3) == "sat") $dw = 6;
+                    $$wh = 0;
+                    if (substr($xr->getAttribute("time"), 4, 2) == "8_") $wh = 1;
+                    if (substr($xr->getAttribute("time"), 4, 2) == "9_") $wh = 2;
+                    if (substr($xr->getAttribute("time"), 4, 2) == "11") $wh = 3;
+                    if (substr($xr->getAttribute("time"), 4, 2) == "13") $wh = 4;
+                    if (substr($xr->getAttribute("time"), 4, 2) == "15") $wh = 5;
+                    if (substr($xr->getAttribute("time"), 4, 2) == "16") $wh = 6;
+                    if (substr($xr->getAttribute("time"), 4, 2) == "18") $wh = 7;
 
-                    int denm = 1;
-                    if (xr.GetAttribute("denm").Equals("true")) denm = 0;
+                    $denm = 1;
+                    if ($xr->getAttribute("denm") == true)) $denm = 0;
 
                     addDiscipline(
-                        dw, //day of week 1..6
+                        $dw, //day of week 1..6
                         2.0, //количество часов
-                        xr.GetAttribute("spec"), //специальность
-                        denm, //числитель
-                        determineType(xr.GetAttribute("type")), //тип нагрузки
-                        xr.GetAttribute("name"), //название дисциплины
-                        xr.GetAttribute("kurs"), //номер курса
-                        wh, //когда проводится 1..7
-                        DateTime.ParseExact(xr.GetAttribute("beg"), "d", new CultureInfo("ru-RU")), //дата начала проведения дисциплины
-                        DateTime.ParseExact(xr.GetAttribute("end"), "d", new CultureInfo("ru-RU")));  //дата конца проведения дисциплины
+                        $xr->getAttribute("spec"), //специальность
+                        $denm, //числитель
+                        determineType($xr->getAttribute("type")), //тип нагрузки
+                        $xr->getAttribute("name"), //название дисциплины
+                        $xr->getAttribute("kurs"), //номер курса
+                        $wh, //когда проводится 1..7
+                        date_create($xr->getAttribute("beg")), //дата начала проведения дисциплины
+                        date_create($xr->getAttribute("end"));  //дата конца проведения дисциплины
                 }
             }
         }
-    }
-}
+    }   
 ?>
