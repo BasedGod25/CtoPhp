@@ -13,7 +13,7 @@
         public $e4;// = new DateTime();
         
 
-        $autumnSemestr = false;
+        public $autumnSemestr = false;
 
         function __construct()
         {
