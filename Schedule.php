@@ -17,7 +17,7 @@
             $countOfDisciplines = 0;
         }
         
-        function addDisc($hours, $speciality, $typ, $name, $kurs1, $$when, $strt, $end)
+        public function addDisc($hours, $speciality, $typ, $name, $kurs1, $when, $strt, $end)
         {
 
             if (strrpos($name, ":"))
@@ -101,8 +101,8 @@
 
     class Schedule
     {
-        $denominator = array(8);
-        $numerator = array(8);
+       private $denominator = array(8);
+       private $numerator = array(8);
 
         function __construct()
         {
@@ -124,7 +124,7 @@
         }
 
         //is_numerator: 0 - числитель, 1 - знаменатель, 2 - то и другое
-        function addDiscipline($day_of_week, $hours, $speciality, $is_numerator, $typ, $disc, $kurs, $$when, $strt, $end)
+        function addDiscipline($day_of_week, $hours, $speciality, $is_numerator, $typ, $disc, $kurs, $when, $strt, $end)
         {
             if ($speciality == null) return;
             switch ($is_numerator)
@@ -189,7 +189,7 @@
                 if ($S[$i] == ';') $flag++;
                 if ($flag == 1 && $S[$i] != ';') $temp = $temp + $S[$i];
             }
-            if (temp.Length == 0) temp = S;
+            if (strlen($temp == 0)) $temp = $S;
             return intval($temp);
         }
 
@@ -228,11 +228,11 @@
             return 0;
         }
 
-        function LoadFromXML(string fileName)
+        function LoadFromXML($fileName)
         {
             $xr=new XMLReader();
             $xr->open($fileName);
-            $while ($xr->read())
+            while ($xr->read())
             {
                 if ($xr->attributeCount > 0)
                 {
@@ -253,7 +253,7 @@
                     if (substr($xr->getAttribute("time"), 4, 2) == "18") $wh = 7;
 
                     $denm = 1;
-                    if ($xr->getAttribute("denm") == true)) $denm = 0;
+                    if ($xr->getAttribute("denm") == true) $denm = 0;
 
                     addDiscipline(
                         $dw, //day of week 1..6
@@ -265,7 +265,7 @@
                         $xr->getAttribute("kurs"), //номер курса
                         $wh, //когда проводится 1..7
                         date_create($xr->getAttribute("beg")), //дата начала проведения дисциплины
-                        date_create($xr->getAttribute("end"));  //дата конца проведения дисциплины
+                        date_create($xr->getAttribute("end")));  //дата конца проведения дисциплины
                 }
             }
         }
