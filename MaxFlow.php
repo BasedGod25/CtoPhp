@@ -2,16 +2,16 @@
 
     class MaxFlow
     { 
-        include 'Graph.php';
-        public const inf = 1000000000;
-        public const MAX = 2048;
-        public $p = array($MAX);
-        public $flag = array($MAX);
-        public $D = array($MAX);
-        public $dist = array($MAX);
+        //include 'Graph.php'; - ошибка
+        const inf = 1000000000;
+        const MAX = 2048;
+        public $p = array(MAX);
+        public $flag = array(MAX);
+        public $D = array(MAX);
+        public $dist = array(MAX);
 
         
-        public $G = new Graph();
+        public $G = Graph;
 
         function __construct($DG)
         {
@@ -45,7 +45,8 @@
             $dist[$s] = 0;
             while (true)
             {
-                $MIN = $inf, $x = -1;
+                $MIN = $inf;
+                $x = -1;
                 for ($i = 0; $i < $MAX; $i++)
                 {
                     if ($MIN > $dist[$i] && $flag[$i] == 0)
@@ -77,8 +78,11 @@
             return ($flag[$d] == 1);
         }
 
-        $q[$MAX];
-        $qs = 0, $qf = 0;
+        private $q = array(MAX);
+        private $qs = 0;
+        private $qf = 0;
+        
+        ///Перегрузка!!!
         function existPath($s, $d)
         {
             for ($i = 0; $i < $MAX; $i++)
