@@ -83,33 +83,33 @@
         private $qf = 0;
         
         ///Перегрузка!!!
-        function existPath($s, $d)
-        {
-            for ($i = 0; $i < $MAX; $i++)
-            {
-                $flag[$i] = 0;
-                $p[$i] = 0;
-            }
-            $qs = $qf = 0;
-            $q[$qf++] = $s;
-            while ($qs != $qf)
-            {
-                $x = $q[$qs++];
-                for ($i = 0; $i < $G->a[$x].size(); $i++)
-                {
-                    $E = new Edge();
-                    $E = $G->edges[$G->a[$x]->a[$i]];
-                    if ($E->cap <= 0) continue;
-                    if ($flag[$E->y] == 0)
-                    {
-                        $flag[$E->y] = 1;
-                        $p[$E->y] = $G->a[$x]->a[$i];
-                        $q[$qf++] = $E->y;
-                    }
-                }
-            }
-            return ($flag[$d] == 1);
-        }
+        // function existPath($s, $d)
+        // {
+        //     for ($i = 0; $i < $MAX; $i++)
+        //     {
+        //         $flag[$i] = 0;
+        //         $p[$i] = 0;
+        //     }
+        //     $qs = $qf = 0;
+        //     $q[$qf++] = $s;
+        //     while ($qs != $qf)
+        //     {
+        //         $x = $q[$qs++];
+        //         for ($i = 0; $i < $G->a[$x].size(); $i++)
+        //         {
+        //             $E = new Edge();
+        //             $E = $G->edges[$G->a[$x]->a[$i]];
+        //             if ($E->cap <= 0) continue;
+        //             if ($flag[$E->y] == 0)
+        //             {
+        //                 $flag[$E->y] = 1;
+        //                 $p[$E->y] = $G->a[$x]->a[$i];
+        //                 $q[$qf++] = $E->y;
+        //             }
+        //         }
+        //     }
+        //     return ($flag[$d] == 1);
+        // }
 
         function Aug($x, $y, $z)
         {
