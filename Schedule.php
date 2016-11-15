@@ -28,7 +28,7 @@
             $typs[$countOfDisciplines] = $typ;
             $disc[$countOfDisciplines] = $name;
             $kurs[$countOfDisciplines] = $kurs1;
-            $pair[$countOfDisciplines] = $$when;
+            $pair[$countOfDisciplines] = $when;
             $starts[$countOfDisciplines] = $strt;
             $ends[$countOfDisciplines] = $end;
             $spec[$countOfDisciplines++] = $speciality;
@@ -38,7 +38,7 @@
         function Remove($index)
         {
             if ($index < 0) return;
-            for ($i = $index; $$i < $countOfDisciplines - 1; $$i++)
+            for ($i = $index; $i < $countOfDisciplines - 1; $i++)
             {
                 $hour[$i] = $hour[$i + 1];
                 $typs[$i] = $typs[$i + 1];
@@ -106,7 +106,7 @@
 
         function __construct()
         {
-            for ($i = 0; $$i < 8; $$i++)
+            for ($i = 0; $i < 8; $i++)
             {
                 $numerator[$i] = new Day();
                 $denominator[$i] = new Day();
@@ -131,16 +131,16 @@
             {
                 case 0:
                     {
-                        $numerator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $$when, $strt, $end);
+                        $numerator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
                     } break;
                 case 1:
                     {
-                        $denominator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $$when, $strt, $end);
+                        $denominator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
                     } break;
                 case 2:
                     {
-                        $numerator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $$when, $strt, $end);
-                        $denominator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $$when, $strt, $end);
+                        $numerator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
+                        $denominator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
                     } break;
             }
         }
@@ -148,7 +148,7 @@
         function getSpec($S)
         {
             $temp = "";
-            for ($i = 0; $$i < strlen($S); $$i++)
+            for ($i = 0; $i < strlen($S); $i++)
             {
                 if ($S[$i] == ';') break;
                 $temp = $temp + $S[$i];
@@ -160,7 +160,7 @@
         {
             $temp = "";
             $flag = 0;
-            for ($i = 0; $$i < strlen($S); $$i++)
+            for ($i = 0; $i < strlen($S); $i++)
             {
                 if ($S[$i] == ';') $flag++;
                 if ($flag == 2 && $S[$i] != ';') $temp = $temp + $S[$i];
@@ -236,14 +236,14 @@
             {
                 if ($xr->attributeCount > 0)
                 {
-                    $$dw = 0;
+                    $dw = 0;
                     if (substr($xr->getAttribute("time"), 0, 3) == "mon") $dw = 1;
                     if (substr($xr->getAttribute("time"), 0, 3) == "tue") $dw = 2;
                     if (substr($xr->getAttribute("time"), 0, 3) == "wed") $dw = 3;
                     if (substr($xr->getAttribute("time"), 0, 3) == "thr") $dw = 4;
                     if (substr($xr->getAttribute("time"), 0, 3) == "fri") $dw = 5;
                     if (substr($xr->getAttribute("time"), 0, 3) == "sat") $dw = 6;
-                    $$wh = 0;
+                    $wh = 0;
                     if (substr($xr->getAttribute("time"), 4, 2) == "8_") $wh = 1;
                     if (substr($xr->getAttribute("time"), 4, 2) == "9_") $wh = 2;
                     if (substr($xr->getAttribute("time"), 4, 2) == "11") $wh = 3;

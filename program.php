@@ -9,7 +9,7 @@ class Program{
     private $monthName = array("JANUARU", "FABRUARY", "MARCH", "APRIL", 
                                   "MAY", "JUNE", "JULY", "AUGUST", 
                                   "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER");
-    public __construct(){
+    function __construct(){
         $this->$S = new Schedule();
     $this->$L = new Load(true);
     $this->$G = new Graph();
