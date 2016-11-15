@@ -15,8 +15,8 @@
 
         function __construct($DG)
         {
-            $G = new Graph();
-            $G = $DG;
+            //$this->$G = new Graph();
+            $this->$G = $DG;
         }
 
         function BellmanFord($s, $d)

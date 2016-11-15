@@ -1,16 +1,22 @@
 <?php 
 class Program{
 
-	static $path = "";
-    static $S = new Schedule();
-    static $L = new Load(true);
-    static $G = new Graph();
-    static $C = new Config();
-    static $monthName = array("JANUARU", "FABRUARY", "MARCH", "APRIL", 
+    private $path = "";
+    private $S;
+    private $L;
+    private $G;
+    private $C;
+    private $monthName = array("JANUARU", "FABRUARY", "MARCH", "APRIL", 
                                   "MAY", "JUNE", "JULY", "AUGUST", 
                                   "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER");
+    public __construct(){
+        $this->$S = new Schedule();
+    $this->$L = new Load(true);
+    $this->$G = new Graph();
+    $this->$C = new Config();
+    }
 
-            static private string toEng(string s)
+    private function toEng(string s)
         {
             $ret = "";
             for ($i = 0; $i < strlen($s); $i++)
