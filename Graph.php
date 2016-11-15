@@ -35,18 +35,20 @@ class Edge{
 class Graph {
     public $dest;
     public $source;
-    const MAX_NUMBER_OF_VERTICES = 2048;
-    public $count_of_edges;
-    public $x_id = array(MAX_NUMBER_OF_VERTICES);
-    public $y_id = array(MAX_NUMBER_OF_VERTICES);
 
-    public $edges;// = array(MAX_NUMBER_OF_VERTICES*MAX_NUMBER_OF_VERTICES);
+    public $MAX_NUMBER_OF_VERTICES = 2048;
+
+    public $count_of_edges;
+    public $x_id = array(2048);
+    public $y_id = array(2048);
+
+    public $edges;// = array($MAX_NUMBER_OF_VERTICES*$MAX_NUMBER_OF_VERTICES);
     public $D; //Dictionary<DateTime, int>
 
     public $countOfDates = 0;
-    public $dates = array(MAX_NUMBER_OF_VERTICES);
+    public $dates = array(2048);
 
-    public $a = array(MAX_NUMBER_OF_VERTICES);
+    public $a = array(2048);
 
     public function __construct(){
         $count_of_edges = 0;

@@ -11,9 +11,9 @@
         public  $name_of_lecturer = "";
         public $isAutumn = true;
 
-        function Load($is_autumn)
+        function __construct($is_autumn)
         {
-            $isAutumn = $is_autumn;
+            $this->isAutumn = $is_autumn;
         }
 
         function LoadFromXML($fileName)
@@ -21,14 +21,16 @@
             //XMLReader xr = new XmlTextReader(new FileStream(fileName, FileMode.Open));
             $xr=new XMLReader();
             $xr->open($fileName);
+
             $n = -1;
-            $arr = array(256, 256);
+            $arr = array(array(256),array(256));
             while ($xr->read())
             {
                 if ($xr->nodeType == XMLReader::ELEMENT && $xr->localName == "row")
                 {
                     $n++;
                     $key = 0;
+
                     while ($xr->read())
                     {
                         if ($xr->nodeType == XMLReader::END_ELEMENT && $xr->localName == "row") break;
@@ -41,8 +43,12 @@
                             $arr[$n][$key] = $xr->value;
                         }
                     }
+
                 }
+
             }
+
+           //var_dump($arr);
             $n++;
             $cnt = 1;
             for ($i = 0; $i < $n; $i++)

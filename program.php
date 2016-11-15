@@ -1,22 +1,22 @@
 <?php 
 class Program{
 
-    private $path = "";
-    private $S;
-    private $L;
-    private $G;
-    private $C;
-    private $monthName = array("JANUARU", "FABRUARY", "MARCH", "APRIL", 
+    public $path = "";
+    public $S;
+    public $L;
+    public $G;
+    public $C;
+    public $monthName = array("JANUARU", "FABRUARY", "MARCH", "APRIL", 
                                   "MAY", "JUNE", "JULY", "AUGUST", 
                                   "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER");
     function __construct(){
-        $this->$S = new Schedule();
-    $this->$L = new Load(true);
-    $this->$G = new Graph();
-    $this->$C = new Config();
+        $this->S = new Schedule();
+    $this->L = new Load(true);
+    $this->G = new Graph();
+    $this->C = new Config();
     }
 
-    private function toEng(string s)
+    function toEng($s)
         {
             $ret = "";
             for ($i = 0; $i < strlen($s); $i++)
@@ -86,13 +86,13 @@ class Program{
                     case 'э': $ret += "e"; break;
                     case 'ю': $ret += "yu"; break;
                     case 'я': $ret += "ya"; break;
-                    default: $ret += s[i]; break;
+                    default: $ret += $s[$i]; break;
                 }
             }
             return $ret;
         }
 
-        static private getInJournal($temp)
+        function getInJournal($temp)
         {
             if ($temp == 8) return 3;
             if ($temp == 10) return 4;
@@ -113,7 +113,7 @@ class Program{
             return 1;
         }
 
-        static private Fill()
+        function Fill()
         {
             $chisl_flag = 0;
             if ($C->getNum()) $chisl_flag = 1;
@@ -130,7 +130,7 @@ class Program{
             $V = $M->minCostMaxFlow();
 
 //&&&&&&&&&&&&&&????????????????????
-            $misValue = System.Reflection.Missing.Value;
+            $misValue = null;
 
             $lines = "";
            // System.IO.StreamWriter file = new System.IO.StreamWriter(path + "out.txt");
@@ -177,7 +177,7 @@ class Program{
                 $dat = substr($key,0, $index);
                 $now = strtotime(dat);
                 if ($lastMonth == -1)
-                    $lastMonth = date('n',$now();
+                    $lastMonth = date('n',$now());
 
                 //double[] at = D[key];
 				$ar = $D[$key];
@@ -244,12 +244,12 @@ class Program{
             {
                 $total_in_month1 += $total_month[$j + 3];
                 if ($total_month[$j + 3] != 0)
-                    $lines += "<td>".$total_month[$j + 3]$"</td>";
+                    $lines += "<td>".$total_month[$j + 3]."</td>";
                 else
                     $lines += "<td></td>";
                 $total_month[$j + 3] = 0;
             }
-            $lines += "<td>"$total_in_month1$"</td>";
+            $lines += "<td>".$total_in_month1."</td>";
 
             $lines += "<tr>";
             $totty = 0.0;
@@ -268,10 +268,33 @@ class Program{
             fclose($file);
         }
 
-        
+        public function Main($args)
+        {
+            
+            $LoadFile = "example.xml";
+            $ScheduleFile = "ttAutumn.xml";
 
+            if (count($args) > 0)
+            {
+                $LoadFile = $args[0]; $ScheduleFile = $args[1];
+            }
 
+            if ($ScheduleFile == "ttAutumn.xml") $this->C->setSemestr("Autumn");
+            else
+            {
+                $this->C->setSemestr("Spring");
+                $this->L->isAutumn = false;
+            }
 
+            $this->S->LoadFromXML($this->path.$ScheduleFile);
+            $this->L->LoadFromXML($this->path.$LoadFile);
+
+            //FillExcel();
+            Fill();
+        }
 }
+
+
+//}
 
  ?>

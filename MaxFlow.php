@@ -5,29 +5,27 @@
         //include 'Graph.php'; - ошибка
         const inf = 1000000000;
         const MAX = 2048;
-        public $p = array(MAX);
-        public $flag = array(MAX);
-        public $D = array(MAX);
-        public $dist = array(MAX);
-
-        
-        public $G = Graph;
+        public $p = array(self::MAX);
+        public $flag = array(self::MAX);
+        public $D = array(self::MAX);
+        public $dist = array(self::MAX);   
+        public $G;
 
         function __construct($DG)
         {
-            //$this->$G = new Graph();
-            $this->$G = $DG;
+            $this->G = new Graph();
+            $this->G = $DG;
         }
 
         function BellmanFord($s, $d)
         {
-            for ($i = 0; $i < $MAX; $i++)
+            for ($i = 0; $i < self::MAX; $i++)
             {
-                $D[$i] = $inf;
+                $D[$i] = self::inf;
             }
             $D[$s] = 0;
 
-            for ($j = 0; $j < $MAX; $j++)
+            for ($j = 0; $j < self::MAX; $j++)
                 for ($i = 0; $i < $G->count_of_edges; $i++)
                     if ($D[$G->edges[$i]->y] > $D[$G->edges[$i]->x] + $G->edges[$i]->cost && $G->edges[$i]->cap > 0)
                         $D[$G->edges[$i]->y] = $D[$G->edges[$i]->x] + $G->edges[$i]->cost;
@@ -35,19 +33,19 @@
 
         function existPath($s, $d, $k)
         {
-            for ($i = 0; $i < $MAX; $i++)
+            for ($i = 0; $i < self::MAX; $i++)
             {
                 $flag[$i] = 0;
                 $p[$i] = -1;
-                $dist[$i] = $inf;
+                $dist[$i] = self::inf;
             }
 
             $dist[$s] = 0;
             while (true)
             {
-                $MIN = $inf;
+                $MIN = self::inf;
                 $x = -1;
-                for ($i = 0; $i < $MAX; $i++)
+                for ($i = 0; $i < self::MAX; $i++)
                 {
                     if ($MIN > $dist[$i] && $flag[$i] == 0)
                     {
@@ -69,23 +67,23 @@
                 }
             }
 
-            for ($i = 0; $i < $MAX; $i++)
+            for ($i = 0; $i < self::MAX; $i++)
             {
-                $MX = $inf;
+                $MX = self::inf;
                 if ($MX > $D[$i] + $dist[$i]) $MX = $D[$i] + $dist[$i];
                 $D[$i] = $MX;
             }
             return ($flag[$d] == 1);
         }
 
-        private $q = array(MAX);
+        private $q = array(self::MAX);
         private $qs = 0;
         private $qf = 0;
         
         ///Перегрузка!!!
         // function existPath($s, $d)
         // {
-        //     for ($i = 0; $i < $MAX; $i++)
+        //     for ($i = 0; $i < self::MAX; $i++)
         //     {
         //         $flag[$i] = 0;
         //         $p[$i] = 0;

@@ -12,10 +12,10 @@
         public $starts = array(32);
         public $ends = array(32);
 
-        function __construct()
-        {
-            $countOfDisciplines = 0;
-        }
+        // function __construct()
+        // {
+        //     //$this->countOfDisciplines = 0;
+        // }
         
         public function addDisc($hours, $speciality, $typ, $name, $kurs1, $when, $strt, $end)
         {
@@ -24,21 +24,21 @@
             {
                 $name = substr($name, strrpos($name, ":"));
             }
-            $hour[$countOfDisciplines] = $hours;
-            $typs[$countOfDisciplines] = $typ;
-            $disc[$countOfDisciplines] = $name;
-            $kurs[$countOfDisciplines] = $kurs1;
-            $pair[$countOfDisciplines] = $when;
-            $starts[$countOfDisciplines] = $strt;
-            $ends[$countOfDisciplines] = $end;
-            $spec[$countOfDisciplines++] = $speciality;
-            $countOfDisciplines++;
+            $hour[$this->countOfDisciplines] = $hours;
+            $typs[$this->countOfDisciplines] = $typ;
+            $disc[$this->countOfDisciplines] = $name;
+            $kurs[$this->countOfDisciplines] = $kurs1;
+            $pair[$this->countOfDisciplines] = $when;
+            $starts[$this->countOfDisciplines] = $strt;
+            $ends[$this->countOfDisciplines] = $end;
+            $spec[$this->countOfDisciplines++] = $speciality;
+            $this->countOfDisciplines++;
         }
 
         function Remove($index)
         {
             if ($index < 0) return;
-            for ($i = $index; $i < $countOfDisciplines - 1; $i++)
+            for ($i = $index; $i < $this->countOfDisciplines - 1; $i++)
             {
                 $hour[$i] = $hour[$i + 1];
                 $typs[$i] = $typs[$i + 1];
@@ -50,12 +50,12 @@
                 $starts[$i] = $starts[$i + 1];
                 $ends[$i] = $ends[$i + 1];
             }
-            $countOfDisciplines--;
+            $this->countOfDisciplines--;
         }
 
         function getCount()
         {
-            return $countOfDisciplines;
+            return $this->countOfDisciplines;
         }
 
         function getHour($index)
@@ -101,26 +101,26 @@
 
     class Schedule
     {
-       private $denominator = array(8);
+       private $denumerator = array(8);
        private $numerator = array(8);
 
         function __construct()
         {
             for ($i = 0; $i < 8; $i++)
             {
-                $numerator[$i] = new Day();
-                $denominator[$i] = new Day();
+                $this->numerator[$i] = new Day();
+                $this->denominator[$i] = new Day();
             }
         }
 
         function getNumeratorDay($day_of_week)
         {
-            return $numerator[$day_of_week];
+            return $this->numerator[$day_of_week];
         }
 
         function getDenominatorDay($day_of_week)
         {
-            return $denominator[$day_of_week];
+            return $this->denumerator[$day_of_week];
         }
 
         //is_numerator: 0 - числитель, 1 - знаменатель, 2 - то и другое
@@ -131,16 +131,16 @@
             {
                 case 0:
                     {
-                        $numerator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
+                        $this->numerator[$day_of_week]->addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
                     } break;
                 case 1:
                     {
-                        $denominator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
+                        $this->denumerator[$day_of_week]->addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
                     } break;
                 case 2:
                     {
-                        $numerator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
-                        $denominator[$day_of_week].addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
+                        $this->numerator[$day_of_week]->addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
+                        $this->denumerator[$day_of_week]->addDisc($hours, $speciality, $typ, $disc, $kurs, $when, $strt, $end);
                     } break;
             }
         }
@@ -255,17 +255,18 @@
                     $denm = 1;
                     if ($xr->getAttribute("denm") == true) $denm = 0;
 
-                    addDiscipline(
+                    $this->addDiscipline(
                         $dw, //day of week 1..6
                         2.0, //количество часов
                         $xr->getAttribute("spec"), //специальность
                         $denm, //числитель
-                        determineType($xr->getAttribute("type")), //тип нагрузки
+                        $this->determineType($xr->getAttribute("type")), //тип нагрузки
                         $xr->getAttribute("name"), //название дисциплины
                         $xr->getAttribute("kurs"), //номер курса
                         $wh, //когда проводится 1..7
                         date_create($xr->getAttribute("beg")), //дата начала проведения дисциплины
-                        date_create($xr->getAttribute("end")));  //дата конца проведения дисциплины
+                        date_create($xr->getAttribute("end"))
+                    );  //дата конца проведения дисциплины
                 }
             }
         }

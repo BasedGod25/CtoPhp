@@ -1,9 +1,12 @@
 <?php 
-//include 'Config.php';
+include 'Config.php';
 include 'Graph.php';
 include 'Load.php';
 include 'MaxFlow.php';
-include 'program.php';
 include 'Schedule.php';
-echo succes;
+include 'program.php';
+
+$P = new Program();
+$a = array('example.xml','ttAutumn.xml');
+$P->main($a);
  ?>

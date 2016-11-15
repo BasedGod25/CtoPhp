@@ -17,10 +17,15 @@
 
         function __construct()
         {
-            $s1->setDate(date("Y"), 9, 1);
-            $e1->setDate(date("Y"), 12, 31);
-            $s4->setDate(date("Y"), 9, 1);
-            $e4->setDate(date("Y"), 12, 31);        
+            $this->s1 = new DateTime();
+            $this->e1 = new DateTime();
+            $this->s4 = new DateTime();
+            $this->e4 = new DateTime();
+
+            $this->s1->setDate(date("Y"), 9, 1);
+            $this->e1->setDate(date("Y"), 12, 31);
+            $this->s4->setDate(date("Y"), 9, 1);
+            $this->e4->setDate(date("Y"), 12, 31);        
         }
 
         function LoadFromFile($fileName)
@@ -55,11 +60,11 @@
         //c1s - course 1st - 3rd start, c1e - course 1st - 3rd end
         //c4s - course 4th - 5th start, c4e - course 4th - 5th end
         function setSemesterStart($c1s, $c1e, $c4s, $c4e) {
-            $s1 = $c1s;
-            $e1 = $c1e;
+            $this->s1 = $c1s;
+            $this->e1 = $c1e;
 
-            $s4 = $c4s;
-            $e4 = $c4e;
+            $this->s4 = $c4s;
+            $this->e4 = $c4e;
         }
 
         function isAutumn() {
@@ -77,42 +82,42 @@
         }
 
         function getStart() {
-            return $s1;
+            return $this->s1;
         }
 
         function getEnd() {
-            return $e1;
+            return $this->e1;
         }
 
         function getStart4() {
-            return $s4;
+            return $this->s4;
         }
 
         function getEnd4() {
-            return $e4;
+            return $this->e4;
         }
 
         function setSemestr($S)
         {
-            if ($S.Equals("Autumn"))
+            if ($S =="Autumn")
             {
-                $s1->setDate(date("Y"), 9, 1);
-				$e1->setDate(date("Y"), 12, 31);
-                $s4->setDate(date("Y"), 9, 1);
-                $e4->setDate(date("Y"), 12, 31);
+                $this->s1->setDate(date("Y"), 9, 1);
+				$this->e1->setDate(date("Y"), 12, 31);
+                $this->s4->setDate(date("Y"), 9, 1);
+                $this->e4->setDate(date("Y"), 12, 31);
             }
             else
             {
-				$s1->setDate(date("Y")+1, 2, 7);
-				$e1->setDate(date("Y")+1, 6, 30);
-                $s4->setDate(date("Y")+1, 2, 7);
-                $e4->setDate(date("Y")+1, 6, 30);
+				$this->s1->setDate(date("Y")+1, 2, 7);
+				$this->e1->setDate(date("Y")+1, 6, 30);
+                $this->s4->setDate(date("Y")+1, 2, 7);
+                $this->e4->setDate(date("Y")+1, 6, 30);
 
 
-                //$s1 = new DateTime(System.DateTime.Today.Year + 1, 2, 7);
-                //$e1 = new DateTime(System.DateTime.Today.Year + 1, 6, 30);
-                //$s4 = new DateTime(System.DateTime.Today.Year + 1, 2, 7);
-                //$e4 = new DateTime(System.DateTime.Today.Year + 1, 6, 30);
+                //$this->s1 = new DateTime(System.DateTime.Today.Year + 1, 2, 7);
+                //$this->e1 = new DateTime(System.DateTime.Today.Year + 1, 6, 30);
+                //$this->s4 = new DateTime(System.DateTime.Today.Year + 1, 2, 7);
+                //$this->e4 = new DateTime(System.DateTime.Today.Year + 1, 6, 30);
             }
         }
     }
