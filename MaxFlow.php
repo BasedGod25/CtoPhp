@@ -137,7 +137,7 @@
         function minCostMaxFlow()
         {
             $sum = 0;
-            while (existPath($G->source, $G->dest, 1))
+            while ($this->existPath($G->source, $G->dest, 1))
             {
                 $Min = findMin($G->dest, $G->source);
                 $sum += $Min;

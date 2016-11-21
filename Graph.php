@@ -165,7 +165,7 @@ class Graph {
 
 	public function buildGraph($S, $L, $start_day, $last_day, $numerator, $holidays, $worktime, $changes, $changes_count, $start_day4, $end_day4){
 
-		clear();
+		$this->clear();
 		$current_date = $last_day;
 		$cnt = 0;
 

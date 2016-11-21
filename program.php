@@ -11,9 +11,9 @@ class Program{
                                   "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER");
     function __construct(){
         $this->S = new Schedule();
-    $this->L = new Load(true);
-    $this->G = new Graph();
-    $this->C = new Config();
+        $this->L = new Load(true);
+        $this->G = new Graph();
+        $this->C= new Config();
     }
 
     function toEng($s)
@@ -116,18 +116,18 @@ class Program{
         function Fill()
         {
             $chisl_flag = 0;
-            if ($C->getNum()) $chisl_flag = 1;
+            if ($this->C->getNum())  $chisl_flag = 1;
 
-            $G->buildGraph($S, $L, $C->getStart(), $C->getEnd(), $chisl_flag,
-                $C->getHolidays(),
-                $C->getWorkTime(),
-                $C->getChanges(),
-                $C->getChangesCount(),
-                $C->getStart4(),
-                $C->getEnd4());
+            $this->G->buildGraph($this->S, $this->L, $this->C->getStart(), $this->C->getEnd(), $chisl_flag,
+                $this->C->getHolidays(),
+                $this->C->getWorkTime(),
+                $this->C->getChanges(),
+                $this->C->getChangesCount(),
+                $this->C->getStart4(),
+                $this->C->getEnd4());
 
             $M = new MaxFlow($G);
-            $V = $M->minCostMaxFlow();
+            $this->V = $M->minCostMaxFlow();
 
 //&&&&&&&&&&&&&&????????????????????
             $misValue = null;
@@ -136,7 +136,7 @@ class Program{
            // System.IO.StreamWriter file = new System.IO.StreamWriter(path + "out.txt");
 
             $file = fopen($path.'out.txt', 'w');
-            $D;
+            $D=array();
             //Dictionary<string, double[]> D = new Dictionary<string, double[]>();
 
             for ($i = $G->count_of_edges - 1; $i >= 1; $i -= 2)
@@ -171,7 +171,7 @@ class Program{
             $total_month = array(256);
             //lines += "<table>";
             $lastMonth = -1;
-            foreach ($D->Keys as $key)
+            foreach ($this->D->Keys as $key)
             {
                 $index = strpos($key, '_');// key.IndexOf('_');
                 $dat = substr($key,0, $index);
@@ -290,7 +290,7 @@ class Program{
             $this->L->LoadFromXML($this->path.$LoadFile);
 
             //FillExcel();
-            Fill();
+            $this->Fill();
         }
 }
 
