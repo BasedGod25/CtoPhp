@@ -126,21 +126,22 @@ class Program{
                 $this->C->getStart4(),
                 $this->C->getEnd4());
 
-            $M = new MaxFlow($G);
+            //var_dump($this->G);
+
+            $M = new MaxFlow($this->G);
             $this->V = $M->minCostMaxFlow();
 
-//&&&&&&&&&&&&&&????????????????????
+            //&&&&&&&&&&&&&&????????????????????
             $misValue = null;
 
             $lines = "";
-           // System.IO.StreamWriter file = new System.IO.StreamWriter(path + "out.txt");
+            //System.IO.StreamWriter file = new System.IO.StreamWriter(path + "out.txt");
 
-            $file = fopen($path.'out.txt', 'w');
-            $D=array();
+            //$file = fopen($path.'out.txt', 'w');
+            $D = array();
             //Dictionary<string, double[]> D = new Dictionary<string, double[]>();
-
-            for ($i = $G->count_of_edges - 1; $i >= 1; $i -= 2)
-            {
+            for ($i = $this->G->count_of_edges - 1; $i >= 1; $i -= 2)
+            { 
                 $E = $G->edges[$i];
                 if ($E->x == $G->source || $E->y == $G->dest || $E->y == $G->source || $E->x == $G->dest) continue;
                 if ($E->cap > 0)
@@ -150,14 +151,14 @@ class Program{
                     $ind = getInJournal($G->y_id[$E->y - 500]);
                     $new_str = $spec + ";" + $name + ";";
                     $key = $G->dates[$E->x - 1].ToShortDateString() + "_" + $new_str;
-                    if (!$D->ContainsKey($key))
+                    if (!array_key_exists($key, $D))
                     {
                     	//!!!???
                         $tt = array(256);
                         for ($j = 0; $j < 256; $j++)
                             $tt[$j] = 0;
 
-                        $D->Add($key, $tt);
+                        $D[$key] = $tt;
                         $D[$key][$ind] += $E->cap;
                     }
                     else
@@ -171,7 +172,7 @@ class Program{
             $total_month = array(256);
             //lines += "<table>";
             $lastMonth = -1;
-            foreach ($this->D->Keys as $key)
+            foreach (array_keys($D) as $key)
             {
                 $index = strpos($key, '_');// key.IndexOf('_');
                 $dat = substr($key,0, $index);
@@ -209,11 +210,11 @@ class Program{
 
                 $lines += "<tr>";
                 $lines += "<td>";
-                $lines += substr($key,0, $index);
+                $lines += substr($key, 0, $index);
                 $lines += "</td>";
 
                 $lines += "<td>";
-                $lines += substr($key,$index + 1, strlen($key) - $index - 1);
+                $lines += substr($key, $index + 1, strlen($key) - $index - 1);
                 $lines += "</td>";
 
                 $total = 0.0;
@@ -264,6 +265,8 @@ class Program{
             $lines += "<td>".$totty."</td>";
             $lines += "</tr>";
             $lines += "</table>";
+            //var_dump($lines);
+            $file = fopen($path.'out.txt', 'w');
             fwrite($file, $lines);
             fclose($file);
         }
@@ -285,6 +288,8 @@ class Program{
                 $this->C->setSemestr("Spring");
                 $this->L->isAutumn = false;
             }
+
+            //var_dump($this->L->isAutumn);
 
             $this->S->LoadFromXML($this->path.$ScheduleFile);
             $this->L->LoadFromXML($this->path.$LoadFile);

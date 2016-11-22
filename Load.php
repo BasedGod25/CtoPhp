@@ -3,12 +3,12 @@
     {
         public $countOfTypes = 31;
         public $countOfSubjects = 0;
-        public $z = array(64, 64);
+        public $z = array(array(64), array(64));
         public $names = array(64);
         public $spect = array(64);
         public $courses = array(64);
 
-        public  $name_of_lecturer = "";
+        public $name_of_lecturer = "";
         public $isAutumn = true;
 
         function __construct($is_autumn)
@@ -26,6 +26,7 @@
             $arr = array(array(256),array(256));
             while ($xr->read())
             {
+
                 if ($xr->nodeType == XMLReader::ELEMENT && $xr->localName == "row")
                 {
                     $n++;
@@ -55,25 +56,29 @@
             {
                 if ($arr[$i][6] == null) $arr[$i][6] = "2";
                 $sem = intval($arr[$i][6]);
-                if (($sem % 2 == 1) != $isAutumn) continue;
+                //var_dump($sem);
+                if (($sem % 2 == 1) != $this->isAutumn) continue;
+                $this->names[$cnt] = $arr[$i][1];
+                $this->spect[$cnt] = $arr[$i][3];
+                $this->courses[$cnt] = $arr[$i][5];
 
-                $names[$cnt] = $arr[$i][1];
-                $spect[$cnt] = $arr[$i][3];
-                $courses[$cnt] = $arr[$i][5];
-
-                if ($spect[$cnt] == null)
-                    $spect[$cnt] = $arr[$i][4];
-                for ($j = 1; $j <= $countOfTypes; $j++)
+                if ($this->spect[$cnt] == null)
+                    $this->spect[$cnt] = $arr[$i][4];
+                for ($j = 1; $j <= $this->countOfTypes; $j++)
                 {
+
                     if ($arr[$i][$j + 4] == null || strlen($arr[$i][$j + 4]) == 0)
-                        $z[$cnt][$j] = 0;
+                        {
+                            $this->z[$cnt][$j] = 0;
+                        }
+
                     else
                     {
                         $res = 0.0;
                         $arr[$i][$j + 4] = str_replace('.', ',', $arr[$i][$j + 4]);
                         // tut nado tryparse if (floatval($arr[$i, $j + 4])
                         //{
-                            $z[$cnt][$j] = floatval($arr[$i][$j + 4]);
+                            $this->z[$cnt][$j] = floatval($arr[$i][$j + 4]);
                         //}
                         //else
                         //{
@@ -83,7 +88,7 @@
                 }
                 $cnt++;
             }
-            $countOfSubjects = $cnt - 1;
+            $this->countOfSubjects = $cnt - 1;
         }
     }
 

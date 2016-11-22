@@ -115,12 +115,20 @@
 
         function getNumeratorDay($day_of_week)
         {
-            return $this->numerator[$day_of_week];
+            if ($this->numerator[$day_of_week] != null)
+                {            
+                    return $this->numerator[$day_of_week];
+                }
+            else return new Day();
         }
 
         function getDenominatorDay($day_of_week)
         {
-            return $this->denumerator[$day_of_week];
+                        if ($this->denumerator[$day_of_week] != null)
+                {            
+                    return $this->denumerator[$day_of_week];
+                }
+            else return new Day();
         }
 
         //is_numerator: 0 - числитель, 1 - знаменатель, 2 - то и другое
@@ -269,6 +277,9 @@
                     );  //дата конца проведения дисциплины
                 }
             }
+            //var_dump($this->numerator);
+            //var_dump($this->denumerator);
+            
         }
     }   
 ?>
