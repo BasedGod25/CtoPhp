@@ -13,7 +13,7 @@ class Program{
         $this->S = new Schedule();
         $this->L = new Load(true);
         $this->G = new Graph();
-        $this->C= new Config();
+        $this->C = new Config();
     }
 
     function toEng($s)
@@ -118,15 +118,14 @@ class Program{
             $chisl_flag = 0;
             if ($this->C->getNum())  $chisl_flag = 1;
 
-            $this->G->buildGraph($this->S, $this->L, $this->C->getStart(), $this->C->getEnd(), $chisl_flag,
+            $this->G->buildGraph(
+                $this->S, $this->L, $this->C->getStart(), $this->C->getEnd(), $chisl_flag,
                 $this->C->getHolidays(),
                 $this->C->getWorkTime(),
                 $this->C->getChanges(),
                 $this->C->getChangesCount(),
                 $this->C->getStart4(),
                 $this->C->getEnd4());
-
-            //var_dump($this->G);
 
             $M = new MaxFlow($this->G);
             $this->V = $M->minCostMaxFlow();
@@ -135,24 +134,36 @@ class Program{
             $misValue = null;
 
             $lines = "";
-            //System.IO.StreamWriter file = new System.IO.StreamWriter(path + "out.txt");
 
-            //$file = fopen($path.'out.txt', 'w');
+            $file = fopen($path.'out.txt', 'w');
             $D = array();
-            //Dictionary<string, double[]> D = new Dictionary<string, double[]>();
+
+
             for ($i = $this->G->count_of_edges - 1; $i >= 1; $i -= 2)
-            { 
-                $E = $G->edges[$i];
-                if ($E->x == $G->source || $E->y == $G->dest || $E->y == $G->source || $E->x == $G->dest) continue;
+            {
+                //$arr = array();
+                //$key = null;
+                //$D[] = (null => $arr);
+                $E = $this->G->edges[$i];
+               //var_dump($this->G->edges[$i]);
+                // var_dump($E->x);
+                // var_dump($E->y);
+                // var_dump($this->G->dest);
+                // var_dump($this->G->source);
+                // echo "\n";
+                if ($E->x == $this->G->source || $E->y == $this->G->dest || $E->y == $this->G->source || $E->x == $this->G->dest)
+                { continue; }
                 if ($E->cap > 0)
                 {
-                    $spec = $L->spect[$G->x_id[$E->y - 500]];
-                    $name = $L->names[$G->x_id[$E->y - 500]];
-                    $ind = getInJournal($G->y_id[$E->y - 500]);
+                    $spec = $this->L->spect[$this->G->x_id[$E->y - 500]];
+                    $name = $this->L->names[$this->G->x_id[$E->y - 500]];
+                    $ind = getInJournal($this->G->y_id[$E->y - 500]);
                     $new_str = $spec + ";" + $name + ";";
-                    $key = $G->dates[$E->x - 1].ToShortDateString() + "_" + $new_str;
+                    $key =  DateTime::format($this->G->dates[$E->x - 1], 'd/m/Y')."_".$new_str;
+                    var_dump($key);
+
                     if (!array_key_exists($key, $D))
-                    {
+                    {   
                     	//!!!???
                         $tt = array(256);
                         for ($j = 0; $j < 256; $j++)
@@ -170,10 +181,11 @@ class Program{
 
             $totas = array(256);
             $total_month = array(256);
-            //lines += "<table>";
+            //$lines += "<table>";
             $lastMonth = -1;
             foreach (array_keys($D) as $key)
             {
+                var_dump(array_keys($D));
                 $index = strpos($key, '_');// key.IndexOf('_');
                 $dat = substr($key,0, $index);
                 $now = strtotime(dat);
@@ -276,7 +288,6 @@ class Program{
             
             $LoadFile = "example.xml";
             $ScheduleFile = "ttAutumn.xml";
-
             if (count($args) > 0)
             {
                 $LoadFile = $args[0]; $ScheduleFile = $args[1];

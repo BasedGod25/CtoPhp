@@ -202,7 +202,7 @@ class Graph {
 			for ($it = 0; $it < $changes_count; $it++){
 				if ($changes[0][$it]==($current_date)){
 					$is_changed = true;
-					//$F = $changes[1][$it];
+					$F = $changes[1][$it];
 					break;
 				}
 			}
@@ -247,7 +247,7 @@ class Graph {
 			$timestamp = date_timestamp_get($current_date);
 			$current_date->setTimestamp(strtotime('-1 day', $timestamp));
 			//var_dump($current_date);
-            echo "Done!";
+            //echo "Done!";
             $cnt_day++;
 		}	
 
