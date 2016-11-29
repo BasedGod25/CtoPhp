@@ -35,20 +35,20 @@
 
         function addHoliday($dt)
         {
-            $holidays[$count++] = $dt;
+            $holidays[$this->count++] = $dt;
         }
 
 
         function getChangesCount() {
-            return $count_changes;
+            return $this->count_changes;
         }
 
         function getHolidays() {
-            return $holidays;
+            return $this->holidays;
         }
 
         function getChanges() {
-            return $changes;
+            return $this->changes;
         }
 
         function updateDateTime() {
@@ -68,7 +68,7 @@
         }
 
         function isAutumn() {
-            return $autumnSemestr;
+            return $this->autumnSemestr;
         }
 
         function getNum()

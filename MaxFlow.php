@@ -21,48 +21,48 @@
         {
             for ($i = 0; $i < self::MAX; $i++)
             {
-                $D[$i] = self::inf;
+                $this->D[$i] = self::inf;
             }
-            $D[$s] = 0;
+            $this->D[$s] = 0;
 
             for ($j = 0; $j < self::MAX; $j++)
-                for ($i = 0; $i < $G->count_of_edges; $i++)
-                    if ($D[$G->edges[$i]->y] > $D[$G->edges[$i]->x] + $G->edges[$i]->cost && $G->edges[$i]->cap > 0)
-                        $D[$G->edges[$i]->y] = $D[$G->edges[$i]->x] + $G->edges[$i]->cost;
+                for ($i = 0; $i < $this->G->count_of_edges; $i++)
+                    if ($this->D[$this->G->edges[$i]->y] > $this->D[$this->G->edges[$i]->x] + $this->G->edges[$i]->cost && $this->G->edges[$i]->cap > 0)
+                        $this->D[$this->G->edges[$i]->y] = $this->D[$this->G->edges[$i]->x] + $this->G->edges[$i]->cost;
         }
 
         function existPath($s, $d, $k)
         {
             for ($i = 0; $i < self::MAX; $i++)
             {
-                $flag[$i] = 0;
-                $p[$i] = -1;
-                $dist[$i] = self::inf;
+                $this->flag[$i] = 0;
+                $this->p[$i] = -1;
+                $this->dist[$i] = self::inf;
             }
 
-            $dist[$s] = 0;
+            $this->dist[$s] = 0;
             while (true)
             {
                 $MIN = self::inf;
                 $x = -1;
                 for ($i = 0; $i < self::MAX; $i++)
                 {
-                    if ($MIN > $dist[$i] && $flag[$i] == 0)
+                    if ($MIN > $this->dist[$i] && $this->flag[$i] == 0)
                     {
-                        $MIN = $dist[$i];
+                        $MIN = $this->dist[$i];
                         $x = $i;
                     }
                 }
                 if ($x == -1) break;
-                $flag[$x] = 1;
-                for ($i = 0; $i < $G->a[$x].size(); $i++)
+                $this->flag[$x] = 1;
+                for ($i = 0; $i < $this->G->a[$x]->size(); $i++)
                 {
-                    $E = new Edge();
-                    $E = $G->edges[$G->a[$x]->a[$i]];
-                    if ($dist[$E->y] > $dist[$E->x] + $E->cost + $D[$E->x] - $D[$E->y] && $E->cap > 0 && $flag[$E->y] == 0)
+                  //  $E = new Edge();
+                    $E = $this->G->edges[$this->G->a[$x]->a[$i]];
+                    if ($this->dist[$E->y] > $this->dist[$E->x] + $E->cost + $this->D[$E->x] - $this->D[$E->y] && $E->cap > 0 && $this->flag[$E->y] == 0)
                     {
-                        $dist[$E->y] = $dist[$E->x] + $E->cost + $D[$E->x] - $D[$E->y];
-                        $p[$E->y] = $G->a[$x]->a[$i];
+                        $this->dist[$E->y] = $this->dist[$E->x] + $E->cost + $this->D[$E->x] - $this->D[$E->y];
+                        $this->p[$E->y] = $this->G->a[$x]->a[$i];
                     }
                 }
             }
@@ -70,10 +70,10 @@
             for ($i = 0; $i < self::MAX; $i++)
             {
                 $MX = self::inf;
-                if ($MX > $D[$i] + $dist[$i]) $MX = $D[$i] + $dist[$i];
-                $D[$i] = $MX;
+                if ($MX > $this->D[$i] + $this->dist[$i]) $MX = $this->D[$i] + $this->dist[$i];
+                $this->D[$i] = $MX;
             }
-            return ($flag[$d] == 1);
+            return ($this->flag[$d] == 1);
         }
 
         private $q = array(self::MAX);
@@ -113,10 +113,10 @@
         {
             while ($x != $y)
             {
-                $G->edges[$p[$x]]->cap -= $z;
-                $G->edges[$G->edges[$p[$x]]->reverse]->cap += $z;
+                $this->G->edges[$this->p[$x]]->cap -= $z;
+                $this->G->edges[$this->G->edges[$this->p[$x]]->reverse]->cap += $z;
                 $E = new Edge();
-                $E = $G->edges[$p[$x]];
+                $E = $this->G->edges[$this->p[$x]];
                 $x = $E->x;
             }
         }
@@ -127,7 +127,7 @@
             while ($x != $y)
             {
                 $E = new Edge();
-                $E = $G->edges[$p[$x]];
+                $E = $this->G->edges[$this->p[$x]];
                 if ($MIN > $E->cap) $MIN = $E->cap;
                 $x = $E->x;
             }
@@ -137,11 +137,11 @@
         function minCostMaxFlow()
         {
             $sum = 0;
-            while ($this->existPath($G->source, $G->dest, 1))
+            while ($this->existPath($this->G->source, $this->G->dest, 1))
             {
-                $Min = findMin($G->dest, $G->source);
+                $Min = $this->findMin($this->G->dest, $this->G->source);
                 $sum += $Min;
-                Aug($G->dest, $G->source, $Min);
+                $this->Aug($this->G->dest, $this->G->source, $Min);
             }
             return $sum;
         }

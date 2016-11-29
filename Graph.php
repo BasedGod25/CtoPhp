@@ -1,16 +1,16 @@
 <?php
 class Vertice{
 
-	 private $MAX_NUMBER_OF_NEIGHBOURS = 2048;
-	 private $count;
-	 private $a;
+	 public $MAX_NUMBER_OF_NEIGHBOURS = 2048;
+	public $count;
+	public $a;
 
-    function __construct(){
+	function __construct(){
          $this->count = 0;
-         $this->a = array($MAX_NUMBER_OF_NEIGHBOURS);
+         $this->a = array($this->MAX_NUMBER_OF_NEIGHBOURS);
      }
 
-    function size(){
+	public function size(){
          return $this->count;
      }
 
@@ -134,7 +134,7 @@ class Graph {
 			//В этот день проводятся консультации
 			if ($current_day->getType($i) == 19){
 			//Проведение индивидуальной консультации по дисциплине
-		        $this->addEdge($this->id[$j][$current_day->getType(i)], FindDay($current_date), $current_day->getHour(i), 2);
+		        $this->addEdge($this->id[$j][$current_day->getType($i)], FindDay($current_date), $current_day->getHour($i), 2);
 		        //Рецензирование контрольной работы по дисциплине
 		        $this->addEdge($this->id[$j][22], FindDay($current_date), $current_day->getHour($i), 2);
 		        //Перенос лекций, практик и лаб на дни консультаций

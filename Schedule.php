@@ -40,15 +40,15 @@
             if ($index < 0) return;
             for ($i = $index; $i < $this->countOfDisciplines - 1; $i++)
             {
-                $hour[$i] = $hour[$i + 1];
-                $typs[$i] = $typs[$i + 1];
-                $disc[$i] = $disc[$i + 1];
-                $kurs[$i] = $kurs[$i + 1];
-                $pair[$i] = $pair[$i + 1];
-                $spec[$i] = $spec[$i + 1];
+                $hour[$i] = $this->hour[$i + 1];
+                $typs[$i] = $this->typs[$i + 1];
+                $disc[$i] = $this->disc[$i + 1];
+                $kurs[$i] = $this->kurs[$i + 1];
+                $pair[$i] = $this->pair[$i + 1];
+                $spec[$i] = $this->spec[$i + 1];
 
-                $starts[$i] = $starts[$i + 1];
-                $ends[$i] = $ends[$i + 1];
+                $starts[$i] = $this->starts[$i + 1];
+                $ends[$i] = $this->ends[$i + 1];
             }
             $this->countOfDisciplines--;
         }
@@ -60,42 +60,42 @@
 
         function getHour($index)
         {
-            return $hour[$index];
+            return $this->hour[$index];
         }
 
         function getSpec($index)
         {
-            return $spec[$index];
+            return $this->spec[$index];
         }
 
         function getType($index)
         {
-            return $typs[$index];
+            return $this->typs[$index];
         }
 
         function getDiscipline($index)
         {
-            return $disc[$index];
+            return $this->disc[$index];
         }
 
         function getKurs($index)
         {
-            return $kurs[$index];
+            return $this->kurs[$index];
         }
 
         function getNumberOfPair($index)
         {
-            return $pair[$index];
+            return $this->pair[$index];
         }
 
         function getStarts($index)
         {
-            return $starts[$index];
+            return $this->starts[$index];
         }
 
         function getEnds($index)
         {
-            return $ends[$index];
+            return $this->ends[$index];
         }
     }
 
@@ -109,7 +109,7 @@
             for ($i = 0; $i < 8; $i++)
             {
                 $this->numerator[$i] = new Day();
-                $this->denominator[$i] = new Day();
+                $this->denumerator[$i] = new Day();
             }
         }
 
@@ -159,7 +159,7 @@
             for ($i = 0; $i < strlen($S); $i++)
             {
                 if ($S[$i] == ';') break;
-                $temp = $temp + $S[$i];
+                $temp = $temp.$S[$i];
             }
             return $temp;
         }
@@ -171,7 +171,7 @@
             for ($i = 0; $i < strlen($S); $i++)
             {
                 if ($S[$i] == ';') $flag++;
-                if ($flag == 2 && $S[$i] != ';') $temp = $temp + $S[$i];
+                if ($flag == 2 && $S[$i] != ';') $temp = $temp.$S[$i];
             }
             return $temp;
         }
@@ -183,7 +183,7 @@
             for ($i = 0; $i < strlen($S); $i++)
             {
                 if ($S[$i] == ';') $flag++;
-                if ($flag == 3 && $S[$i] != ';') $temp = $temp + $S[$i];
+                if ($flag == 3 && $S[$i] != ';') $temp = $temp.$S[$i];
             }
             return $temp;
         }
@@ -195,7 +195,7 @@
             for ($i = 0; $i < strlen($S); $i++)
             {
                 if ($S[$i] == ';') $flag++;
-                if ($flag == 1 && $S[$i] != ';') $temp = $temp + $S[$i];
+                if ($flag == 1 && $S[$i] != ';') $temp = $temp.$S[$i];
             }
             if (strlen($temp == 0)) $temp = $S;
             return intval($temp);
@@ -208,7 +208,7 @@
             for ($i = 0; $i < strlen($S); $i++)
             {
                 if ($S[$i] == ';') $flag++;
-                if ($flag == 4 && $S[$i] != ';') $temp = $temp + $S[$i];
+                if ($flag == 4 && $S[$i] != ';') $temp = $temp.$S[$i];
             }
             //date?
             return ($temp);
@@ -221,7 +221,7 @@
             for ($i = 0; $i < strlen($S); $i++)
             {
                 if ($S[$i] == ';') $flag++;
-                if ($flag == 5 && $S[$i] != ';') $temp = $temp + $S[$i];
+                if ($flag == 5 && $S[$i] != ';') $temp = $temp.$S[$i];
             }
             //date?
             return ($temp);
