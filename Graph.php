@@ -1,12 +1,13 @@
 <?php
 class Vertice{
 
-	 const MAX_NUMBER_OF_NEIGHBOURS = 2048;
-	 private $count = 0;
-	 private $a = array(MAX_NUMBER_OF_NEIGHBOURS);
+	 private $MAX_NUMBER_OF_NEIGHBOURS = 2048;
+	 private $count;
+	 private $a;
 
     function __construct(){
          $this->count = 0;
+         $this->a = array($MAX_NUMBER_OF_NEIGHBOURS);
      }
 
     function size(){
