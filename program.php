@@ -159,7 +159,9 @@ class Program{
                     $name = $this->L->names[$this->G->x_id[$E->y - 500]];
                     $ind = $this->getInJournal($this->G->y_id[$E->y - 500]);
                     $new_str = $spec.";".$name.";";
-                    $key =  DateTime::format($this->G->dates[$E->x - 1], 'd/m/Y')."_".$new_str;
+
+                    //!!!!Fatal error: Call to a member function format() on a non-object in D:\paha\CtoPhp\program.php on line 162
+                    $key =  $this->G->dates[$E->x - 1]->format('d/m/Y')."_".$new_str;
                     var_dump($key);
 
                     if (!array_key_exists($key, $D))

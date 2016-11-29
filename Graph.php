@@ -72,6 +72,9 @@ class Graph {
         if ($this->a[$x] == null) $this->a[$x] = new Vertice();
         if ($this->a[$y] == null) $this->a[$y] = new Vertice();
 
+		if ($cap == null) $cap = 100;
+
+
         $this->a[$x]->push_back($this->count_of_edges);
         $this->edges[$this->count_of_edges] = new Edge($x, $y, $cap, $cost, $this->count_of_edges + 1);
         $this->count_of_edges++;
@@ -123,6 +126,10 @@ class Graph {
 			for ($t = 25; $t <= 30; $t++){
 				 //Перенос проведения любой нагрузки по дисциплине на любой день с худшим приоритетом
 				$this->addEdge($this->id[$j][$t], $this->FindDay($current_date), $current_day->getHour($i),100);
+//				var_dump($this->FindDay($current_date));
+//
+//				var_dump($current_date);
+//				echo ("\n");
 			}
 
 			$this->addEdge($this->id[$j][8], $this->FindDay($current_date),$current_day->getHour($i),100);
@@ -153,9 +160,10 @@ class Graph {
 		        //Руководство магистрами
 		        $this->addEdge($this->id[$j][29], $this->FindDay($current_date), $current_day->getHour($i), 0);
 		        //Руководство аспирантами и докторами
-		        $this->addEdge($this->id[$j][30], $this->FindDay($current_date), $current_day->getHour($i), 0);		
-		    }
+		        $this->addEdge($this->id[$j][30], $this->FindDay($current_date), $current_day->getHour($i), 0);
 
+		    }
+	//var_dump($this->id);
 	        if (!$current_day->getSpec($i)==($L->spect[$j])) continue;
 	                if (!$current_day->getDiscipline($i)==($L->names[$j])) continue;
 					//День в который проводятся пары по расписанию по данной дисциплинеи данной специальности и курсу
@@ -178,7 +186,7 @@ class Graph {
 		$cnt = 0;
 
 		for ($i = 1; $i <= $L->countOfSubjects; $i++){
-			for ($j = 1; $j <= $L->countOfSubjects; $j++){
+			for ($j = 1; $j <= $L->countOfTypes; $j++){
 				$cnt++;
 				$this->x_id[$cnt] = $i;
 				$this->y_id[$cnt] = $j;

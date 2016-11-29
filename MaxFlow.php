@@ -115,7 +115,7 @@
             {
                 $this->G->edges[$this->p[$x]]->cap -= $z;
                 $this->G->edges[$this->G->edges[$this->p[$x]]->reverse]->cap += $z;
-                $E = new Edge();
+//                $E = new Edge();
                 $E = $this->G->edges[$this->p[$x]];
                 $x = $E->x;
             }
@@ -126,7 +126,7 @@
             $MIN = 1000000000;
             while ($x != $y)
             {
-                $E = new Edge();
+//                $E = new Edge();
                 $E = $this->G->edges[$this->p[$x]];
                 if ($MIN > $E->cap) $MIN = $E->cap;
                 $x = $E->x;
