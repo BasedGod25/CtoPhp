@@ -145,12 +145,7 @@ class Program{
                 //$key = null;
                 //$D[] = (null => $arr);
                 $E = $this->G->edges[$i];
-               //var_dump($this->G->edges[$i]);
-                // var_dump($E->x);
-                // var_dump($E->y);
-                // var_dump($this->G->dest);
-                // var_dump($this->G->source);
-                // echo "\n";
+
                 if ($E->x == $this->G->source || $E->y == $this->G->dest || $E->y == $this->G->source || $E->x == $this->G->dest)
                 { continue; }
                 if ($E->cap > 0)
@@ -159,10 +154,13 @@ class Program{
                     $name = $this->L->names[$this->G->x_id[$E->y - 500]];
                     $ind = $this->getInJournal($this->G->y_id[$E->y - 500]);
                     $new_str = $spec.";".$name.";";
-
-                    //!!!!Fatal error: Call to a member function format() on a non-object in D:\paha\CtoPhp\program.php on line 162
-                    $key =  $this->G->dates[$E->x - 1]->format('d/m/Y')."_".$new_str;
-                    var_dump($key);
+                    $date_g = new DateTime();
+                    $date_g->setTimeStamp($this->G->dates[$E->x - 1]);
+                    //var_dump($date_g);
+                    $key =  $date_g->format('d/m/Y')."_".$new_str;
+                    //^v
+                    //$key =  $this->G->dates[$E->x - 1]->format('d/m/Y')."_".$new_str;
+                    
 
                     if (!array_key_exists($key, $D))
                     {   
@@ -187,18 +185,22 @@ class Program{
             $lastMonth = -1;
             foreach (array_keys($D) as $key)
             {
-                var_dump(array_keys($D));
+                //var_dump(array_keys($D));
                 $at = $D[$key];
                 $index = strpos($key, '_');// key.IndexOf('_');
-                $dat = substr($key,0, $index);
-                $now = strtotime($dat);
+                $dat = str_replace("/", "-", substr($key, 0, $index));
+                var_dump($dat);
+                $now = new DateTime();
+                $now = $now->setTimestamp(strtotime($dat));
+                var_dump($now);
+
                 if ($lastMonth == -1)
-                    $lastMonth = date('n',$now);
+                    $lastMonth = date('n', $now->getTimestamp);
 
                 //double[] at = D[key];
 				$ar = $D[$key];
 
-                if (date('n',$now) != $lastMonth && $lastMonth != -1)
+                if (date('n', $now->getTimestamp) != $lastMonth && $lastMonth != -1)
                 {
                     $lastMonth = date('n',$now);
                     $lines .= '<tr class=\"total\">';
@@ -281,7 +283,7 @@ class Program{
             $lines .= "</tr>";
             $lines .= "</table>";
             //var_dump($lines);
-            $file = fopen($this->path.'out.txt', 'w');
+            //$file = fopen($this->path.'out.txt', 'w');
             fwrite($file, $lines);
             fclose($file);
         }
