@@ -117,7 +117,6 @@ class Program{
         {
             $chisl_flag = 0;
             if ($this->C->getNum())  $chisl_flag = 1;
-
             $this->G->buildGraph(
                 $this->S, $this->L, $this->C->getStart(), $this->C->getEnd(), $chisl_flag,
                 $this->C->getHolidays(),
@@ -126,25 +125,16 @@ class Program{
                 $this->C->getChangesCount(),
                 $this->C->getStart4(),
                 $this->C->getEnd4());
-           // echo "G";
             $M = new MaxFlow($this->G);
-            //echo "G2";
             $this->V = $M->minCostMaxFlow();
-
-            //&&&&&&&&&&&&&&????????????????????
             $misValue = null;
 
             $lines = "";
-
-            $file = fopen($this->path.'out.html', 'w');
             $D = array();
 
 
             for ($i = $this->G->count_of_edges - 1; $i >= 1; $i -= 2)
             {
-                //$arr = array();
-                //$key = null;
-                //$D[] = (null => $arr);
                 $E = $this->G->edges[$i];
 
                 if ($E->x == $this->G->source || $E->y == $this->G->dest || $E->y == $this->G->source || $E->x == $this->G->dest)
@@ -157,19 +147,14 @@ class Program{
                     $new_str = $spec.";".$name.";";
                     $date_g = new DateTime();
                     $date_g->setTimeStamp($this->G->dates[$E->x - 1]);
-                    //var_dump($date_g);
+
                     $key =  $date_g->format('d/m/Y')."_".$new_str;
-                    //^v
-                    //$key =  $this->G->dates[$E->x - 1]->format('d/m/Y')."_".$new_str;
-                    
 
                     if (!array_key_exists($key, $D))
                     {   
-                    	//!!!???
                         $tt = array(256);
                         for ($j = 0; $j < 256; $j++)
                             $tt[$j] = 0;
-//
                         $D[$key] = $tt;
                         $D[$key][$ind] += $E->cap;
                     }
@@ -264,7 +249,6 @@ class Program{
                     $totas[$j + 3] += $at[$j + 3];
                     $total_month[$j + 3] += $at[$j + 3];
                     $total += $at[$j + 3];
-                   var_dump($at[$j + 3]);
                     if ($at[$j + 3] != 0)
                         $lines .= "<td>".$at[$j + 3]."</td>";
                     else
@@ -306,10 +290,7 @@ class Program{
             $lines .= "<td>".$totty."</td>";
             $lines .= "</tr>";
             $lines .= "</table>";
-            //var_dump($lines);
-            //$file = fopen($this->path.'out.txt', 'w');
-            fwrite($file, $lines);
-            fclose($file);
+            return $lines;
         }
 
         public function Main($args)

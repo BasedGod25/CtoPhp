@@ -9,5 +9,5 @@ include 'program.php';
 
 $P = new Program();
 $a = array('example.xml','ttAutumn.xml');
-$P->main($a);
+echo $P->main($a);
  ?>

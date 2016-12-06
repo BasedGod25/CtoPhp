@@ -45,8 +45,8 @@ class Graph {
     public $x_id = array(2048);
     public $y_id = array(2048);
 
-    public $edges;// = array($MAX_NUMBER_OF_VERTICES*$MAX_NUMBER_OF_VERTICES);
-    public $D; //Dictionary<DateTime, int>
+    public $edges;
+    public $D;
 
     public $countOfDates = 0;
     public $dates = array(2048);
@@ -88,11 +88,11 @@ class Graph {
 		$d = date_timestamp_get($d);
 		if (date("w", $d)>=0 && date("w",$d) < 7){
 
-				if (date("w", $d) == 0){
-					return date("w",$d)+7;
+				if (date("w", $d) == 7){
+					return 0;
 				}
 				else 
-					return date("w",$d);
+					return date("w",$d)+1;
 			}
 			else return -1;
 	}
@@ -101,13 +101,11 @@ class Graph {
 		$date = $date1->getTimestamp();
 		for($i = 0; $i < $this->countOfDates; $i++) {
 			if($date === $this->dates[$i]) {
-				//echo "1 ";
-				//var_dump($i);
+
 				return $i;
 			}
 		}
-		//echo "2 ";
-		//var_dump($this->countOfDates);
+
 		$this->dates[$this->countOfDates++] = $date;
 		return $this->countOfDates - 1;
 	}
@@ -130,10 +128,7 @@ class Graph {
 			for ($t = 25; $t <= 30; $t++){
 				 //Перенос проведения любой нагрузки по дисциплине на любой день с худшим приоритетом
 				$this->addEdge($this->id[$j][$t], $this->FindDay($current_date), $current_day->getHour($i),100);
-//				var_dump($this->FindDay($current_date));
-//
-//				var_dump($current_date);
-//				echo ("\n");
+
 			}
 
 			$this->addEdge($this->id[$j][8], $this->FindDay($current_date),$current_day->getHour($i),100);
@@ -167,31 +162,12 @@ class Graph {
 		        $this->addEdge($this->id[$j][30], $this->FindDay($current_date), $current_day->getHour($i), 0);
 
 		    }
-	//var_dump($this->id);
-//			echo "1 ";
-//			var_dump($i);
-//			var_dump($current_day);
-//			var_dump($current_day->getSpec($i));
-//			echo "2 ";
-//			var_dump($L->spect[$j]);
-//			echo "3 ";
-//			var_dump($current_day->getDiscipline($i));
-//			echo "4 ";
-//			var_dump($L->names[$j]);
+
 	        if (!($current_day->getSpec($i)==$L->spect[$j])) continue;
 	                if (!($current_day->getDiscipline($i)==$L->names[$j])) continue;
 
-					//echo "0 ";
-					//var_dump($current_day);
-
 			//День в который проводятся пары по расписанию по данной дисциплинеи данной специальности и курсу
 	                if ($current_day->getStarts($i) <= $current_date && $current_date <= $current_day->getEnds($i)){
-//						echo "11 ";
-//						var_dump($this->id[$j][$current_day->getType($i)]);
-//						echo "12 ";
-//						var_dump($this->FindDay($current_date));
-//						echo "13 ";
-//						var_dump($current_day->getHour($i));
 						$this->addEdge($this->id[$j][$current_day->getType($i)], $this->FindDay($current_date), $current_day->getHour($i), 0);
 	                }
 	                //Индивидуальная консультация по дисциплине
@@ -215,15 +191,12 @@ class Graph {
 				$this->x_id[$cnt] = $i;
 				$this->y_id[$cnt] = $j;
 				$this->id[$i][$j]= $cnt + 500;
-				//var_dump($this->source);
-				//var_dump($this->id[$i][$j]);
-				//var_dump($L->z[$i][$j]);
+
 				$this->addEdge($this->source, $this->id[$i][$j], $L->z[$i][$j], 0);
 
 			}
 		}
-		//var_dump($L->z);
-		//var_dump($this->edges);
+
 		$cnt_day = 0;
 
 		while ($current_date >= $start_day) 
@@ -266,7 +239,6 @@ class Graph {
                 {
                     for ($i = 0; $i < $S->getNumeratorDay($int_value)->getCount(); $i++)
                     {
-						echo "1\n";
                         $current_day = $S->getNumeratorDay($int_value);
                         $this->addEdges($current_day, $i, $F, $L, !($start_day4 <= $current_date && $current_date <= $end_day4));
                     }
@@ -275,7 +247,6 @@ class Graph {
                 {
                     for ($i = 0; $i < $S->getDenominatorDay($int_value)->getCount(); $i++)
                     {
-						echo "2\n";
                         $current_day = $S->getDenominatorDay($int_value);
                         $this->addEdges($current_day, $i, $F, $L, !($start_day4 <= $current_date && $current_date <= $end_day4));
                     }
