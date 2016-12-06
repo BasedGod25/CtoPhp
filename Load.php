@@ -19,28 +19,23 @@
         function LoadFromXML($fileName)
         {
             //XMLReader xr = new XmlTextReader(new FileStream(fileName, FileMode.Open));
-            $xr=new XMLReader();
+            $xr = new XMLReader();
             $xr->open($fileName);
 
             $n = -1;
-            $arr = array(array(256),array(256));
-            while ($xr->read())
-            {
+            $arr = array(array(256), array(256));
+            while ($xr->read()) {
 
-                if ($xr->nodeType == XMLReader::ELEMENT && $xr->localName == "row")
-                {
+                if ($xr->nodeType == XMLReader::ELEMENT && $xr->localName == "row") {
                     $n++;
                     $key = 0;
 
-                    while ($xr->read())
-                    {
+                    while ($xr->read()) {
                         if ($xr->nodeType == XMLReader::END_ELEMENT && $xr->localName == "row") break;
-                        if ($xr->nodeType == XMLReader::ELEMENT)
-                        {
+                        if ($xr->nodeType == XMLReader::ELEMENT) {
                             $key = intval(substr($xr->localName, 1));
                         }
-                        if ($xr->nodeType == XMLReader::TEXT)
-                        {
+                        if ($xr->nodeType == XMLReader::TEXT) {
                             $arr[$n][$key] = $xr->value;
                         }
                     }
@@ -49,11 +44,11 @@
 
             }
 
-           //var_dump($arr);
+            //var_dump($arr);
             $n++;
             $cnt = 1;
-            for ($i = 0; $i < $n; $i++)
-            {
+
+            for ($i = 0; $i < $n; $i++) {
                 if ($arr[$i][6] == null) $arr[$i][6] = "2";
                 $sem = intval($arr[$i][6]);
                 //var_dump($sem);
@@ -64,21 +59,16 @@
 
                 if ($this->spect[$cnt] == null)
                     $this->spect[$cnt] = $arr[$i][4];
-                for ($j = 1; $j <= $this->countOfTypes; $j++)
-                {
+                for ($j = 1; $j <= $this->countOfTypes; $j++) {
 
-                    if ($arr[$i][$j + 4] == null || strlen($arr[$i][$j + 4]) == 0)
-                        {
-                            $this->z[$cnt][$j] = 0;
-                        }
-
-                    else
-                    {
+                    if ($arr[$i][$j + 4] == null || strlen($arr[$i][$j + 4]) == 0) {
+                        $this->z[$cnt][$j] = 0;
+                    } else {
                         $res = 0.0;
                         $arr[$i][$j + 4] = str_replace('.', ',', $arr[$i][$j + 4]);
                         // tut nado tryparse if (floatval($arr[$i, $j + 4])
                         //{
-                            $this->z[$cnt][$j] = floatval($arr[$i][$j + 4]);
+                        $this->z[$cnt][$j] = floatval($arr[$i][$j + 4]);
                         //}
                         //else
                         //{
@@ -89,6 +79,10 @@
                 $cnt++;
             }
             $this->countOfSubjects = $cnt - 1;
+//            echo "5 ";
+//            var_dump($this->names);
+//            echo "6 ";
+//            var_dump($this->spect);
         }
     }
 

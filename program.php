@@ -126,8 +126,9 @@ class Program{
                 $this->C->getChangesCount(),
                 $this->C->getStart4(),
                 $this->C->getEnd4());
-
+           // echo "G";
             $M = new MaxFlow($this->G);
+            //echo "G2";
             $this->V = $M->minCostMaxFlow();
 
             //&&&&&&&&&&&&&&????????????????????
@@ -135,7 +136,7 @@ class Program{
 
             $lines = "";
 
-            $file = fopen($this->path.'out.txt', 'w');
+            $file = fopen($this->path.'out.html', 'w');
             $D = array();
 
 
@@ -168,20 +169,43 @@ class Program{
                         $tt = array(256);
                         for ($j = 0; $j < 256; $j++)
                             $tt[$j] = 0;
-
+//
                         $D[$key] = $tt;
-                        $D[$key][$ind] .= $E->cap;
+                        $D[$key][$ind] += $E->cap;
                     }
                     else
                     {
-                        $D[$key][$ind] .= $E->cap;
+                        $D[$key][$ind] += $E->cap;
                     }
                 }
             }
 
             $totas = array(256);
             $total_month = array(256);
-            //$lines .= "<table>";
+
+            $lines .= '<link rel="stylesheet" href="style.css">';
+            $lines .= "<table>";
+            $lines .="    <thead>
+    <th class=\"vertical\" style=\"width: 50px;\">Дата</th>
+    <th class=\"vertical\" style=\"width: 300px;\">Специальность</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Лекции</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Практики</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Лабораторные работы</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Консультации по дисциплине</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Консультации перед экзаменом</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Индивидуальные консультации</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Зачет</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Экзамен</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Рецензирование контрольных работ</th>
+    <th class=\"vertical\" style=\"width: 30px;\">ГАК и ГЭК</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Руководство практиками</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Руководство курсовыми работами</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Руководство дипломными работами</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Руководство аспирантами</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Руководство магистрами</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Руководство докторами</th>
+    <th class=\"vertical\" style=\"width: 30px;\">Всего</th>
+    </thead>";
             $lastMonth = -1;
             foreach (array_keys($D) as $key)
             {
@@ -189,10 +213,10 @@ class Program{
                 $at = $D[$key];
                 $index = strpos($key, '_');// key.IndexOf('_');
                 $dat = str_replace("/", "-", substr($key, 0, $index));
-                var_dump($dat);
+              //  var_dump($dat);
                 $now = new DateTime();
                 $now = $now->setTimestamp(strtotime($dat));
-                var_dump($now);
+              //  var_dump($now);
 
                 if ($lastMonth == -1)
                     $lastMonth = date('n', $now->getTimestamp);
@@ -203,7 +227,7 @@ class Program{
                 if (date('n', $now->getTimestamp) != $lastMonth && $lastMonth != -1)
                 {
                     $lastMonth = date('n',$now);
-                    $lines .= '<tr class=\"total\">';
+                    $lines .= '<tr class="total">';
                     $lines .= "<td>"."TOTAL IN ";
                     $lines .= "</td>";
 
@@ -215,7 +239,7 @@ class Program{
                     $total_in_month = 0.0;
                     for ($j = 0; $j < 16; $j++)
                     {
-                        $total_in_month .= $total_month[$j + 3];
+                        $total_in_month += $total_month[$j + 3];
                         if ($total_month[$j + 3] != 0)
                             $lines .= "<td>".$total_month[$j + 3]."</td>";
                         else
@@ -237,10 +261,10 @@ class Program{
                 $total = 0.0;
                 for ($j = 0; $j < 16; $j++)
                 {
-                    $totas[$j + 3] .= $at[$j + 3];
-                    $total_month[$j + 3] .= $at[$j + 3];
-                    $total .= $at[$j + 3];
-
+                    $totas[$j + 3] += $at[$j + 3];
+                    $total_month[$j + 3] += $at[$j + 3];
+                    $total += $at[$j + 3];
+                   var_dump($at[$j + 3]);
                     if ($at[$j + 3] != 0)
                         $lines .= "<td>".$at[$j + 3]."</td>";
                     else
@@ -260,7 +284,7 @@ class Program{
             $total_in_month1 = 0.0;
             for ($j = 0; $j < 16; $j++)
             {
-                $total_in_month1 .= $total_month[$j + 3];
+                $total_in_month1 += $total_month[$j + 3];
                 if ($total_month[$j + 3] != 0)
                     $lines .= "<td>".$total_month[$j + 3]."</td>";
                 else
@@ -271,10 +295,10 @@ class Program{
 
             $lines .= "<tr>";
             $totty = 0.0;
-            $lines .= '<td></td><td align=\"right\">TOTAL:</td>';
+            $lines .= '<td></td><td align="right">TOTAL:</td>';
             for ($i = 2; $i < 18; $i++)
             {
-                $totty .= $totas[$i + 1];
+                $totty += $totas[$i + 1];
                 if($totas[$i + 1] != 0)
                     $lines .= "<td>".$totas[i + 1]."</td>"; else
                     $lines .= "<td></td>";

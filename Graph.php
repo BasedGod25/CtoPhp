@@ -99,13 +99,17 @@ class Graph {
 
 	private function FindDay($date1){
 		$date = $date1->getTimestamp();
-		if (null != array_search($date, $this->D)) {
-			return $this->D[$date] + 1;
+		for($i = 0; $i < $this->countOfDates; $i++) {
+			if($date === $this->dates[$i]) {
+				//echo "1 ";
+				//var_dump($i);
+				return $i;
+			}
 		}
-			$this->D[$date] = $this->countOfDates;
-
-			$this->dates[$this->countOfDates++] = $date;
-			return $this->countOfDates;
+		//echo "2 ";
+		//var_dump($this->countOfDates);
+		$this->dates[$this->countOfDates++] = $date;
+		return $this->countOfDates - 1;
 	}
 
 	public function date2int($date){
@@ -164,11 +168,31 @@ class Graph {
 
 		    }
 	//var_dump($this->id);
-	        if (!$current_day->getSpec($i)==($L->spect[$j])) continue;
-	                if (!$current_day->getDiscipline($i)==($L->names[$j])) continue;
-					//День в который проводятся пары по расписанию по данной дисциплинеи данной специальности и курсу
+//			echo "1 ";
+//			var_dump($i);
+//			var_dump($current_day);
+//			var_dump($current_day->getSpec($i));
+//			echo "2 ";
+//			var_dump($L->spect[$j]);
+//			echo "3 ";
+//			var_dump($current_day->getDiscipline($i));
+//			echo "4 ";
+//			var_dump($L->names[$j]);
+	        if (!($current_day->getSpec($i)==$L->spect[$j])) continue;
+	                if (!($current_day->getDiscipline($i)==$L->names[$j])) continue;
+
+					//echo "0 ";
+					//var_dump($current_day);
+
+			//День в который проводятся пары по расписанию по данной дисциплинеи данной специальности и курсу
 	                if ($current_day->getStarts($i) <= $current_date && $current_date <= $current_day->getEnds($i)){
-	                    $this->addEdge($this->id[$j][$current_day->getType($i)], $this->FindDay($current_date), $current_day.getHour($i), 0);
+//						echo "11 ";
+//						var_dump($this->id[$j][$current_day->getType($i)]);
+//						echo "12 ";
+//						var_dump($this->FindDay($current_date));
+//						echo "13 ";
+//						var_dump($current_day->getHour($i));
+						$this->addEdge($this->id[$j][$current_day->getType($i)], $this->FindDay($current_date), $current_day->getHour($i), 0);
 	                }
 	                //Индивидуальная консультация по дисциплине
 	                $this->addEdge($this->id[$j][17], $this->FindDay($current_date), $current_day->getHour($i), 1);
@@ -191,6 +215,9 @@ class Graph {
 				$this->x_id[$cnt] = $i;
 				$this->y_id[$cnt] = $j;
 				$this->id[$i][$j]= $cnt + 500;
+				//var_dump($this->source);
+				//var_dump($this->id[$i][$j]);
+				//var_dump($L->z[$i][$j]);
 				$this->addEdge($this->source, $this->id[$i][$j], $L->z[$i][$j], 0);
 
 			}
@@ -208,6 +235,7 @@ class Graph {
 			$F = $current_date;
 
 			$int_value =  $this->DayOfWeek2Int($current_date); //!!!!
+
 			for ($it = 0; $it < $changes_count; $it++){
 				if ($changes[0][$it]==($current_date)){
 					$is_changed = true;
@@ -234,11 +262,11 @@ class Graph {
 
             $this->addEdge($this->FindDay($F), $this->dest, $worktime, 0);
 
-
 			if ($numerator == 1)
                 {
                     for ($i = 0; $i < $S->getNumeratorDay($int_value)->getCount(); $i++)
                     {
+						echo "1\n";
                         $current_day = $S->getNumeratorDay($int_value);
                         $this->addEdges($current_day, $i, $F, $L, !($start_day4 <= $current_date && $current_date <= $end_day4));
                     }
@@ -247,6 +275,7 @@ class Graph {
                 {
                     for ($i = 0; $i < $S->getDenominatorDay($int_value)->getCount(); $i++)
                     {
+						echo "2\n";
                         $current_day = $S->getDenominatorDay($int_value);
                         $this->addEdges($current_day, $i, $F, $L, !($start_day4 <= $current_date && $current_date <= $end_day4));
                     }
@@ -255,41 +284,8 @@ class Graph {
 
 			$timestamp = date_timestamp_get($current_date);
 			$current_date->setTimestamp(strtotime('-1 day', $timestamp));
-			//var_dump($current_date);
-            //echo "Done!";
             $cnt_day++;
 		}	
-
-		
 	}
-//Все функции addEdge1(FindDay($F),$dest,$worktime, 0) с 4 аргументами теперь 
-	// public function addEdge1(FindDay($F),$dest,$worktime, 0){
-
-	// 	if ($numerator == 1){
-	// 		if ($numerator == 1){
-	// 	        for ($i = 0; $i < $S->getNumeratorDay($int_value)->getCount(); $i++){
-	// 	        	$current_date = new Day();
-	// 	            $current_day = S -> getNumeratorDay($int_value);
-	// 	            addEdges($current_day, $i, $F, $L, !($start_day4 <= $current_date && $current_date <= $end_day4));
-	// 	        }
-	// 	    }
-	// 	    else
-	// 	    {
-	// 	        for ($i = 0; $i < $S -> getDenominatorDay($int_value)->getCount(); $i++){
-	// 	        	$current_date = new Day();
-
-	// 	            $current_day = $S->getDenominatorDay($int_value);
-	// 	            addEdges($current_day, $i, $F, $L, !($start_day4 <= $current_date && $current_date <= $end_day4));
-	// 	        }
-	// 	    }
-	// 		if ($int_value == 7) $numerator = 1 - $numerator;
-	// 		$current_date = $current_date.AddDays(-1);
-	// 		$cnt_day++;
-	// 	}
-	// }
 }
-
-
-
-
 ?>

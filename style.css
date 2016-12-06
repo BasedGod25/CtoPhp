@@ -1,0 +1,37 @@
+
+table.example{
+    font-family:Arial;
+    font-size:12px;
+    border-collapse:collapse;
+//table-layout:fixed;
+}
+table.example td{
+    padding:5px;
+    border:1px solid #cc0;
+    white-space:nowrap;
+    overflow: hidden;
+}
+
+tr:hover{
+    background-color: rgba(159, 148, 162, 1)
+}
+
+tr.total{
+    padding:5px;
+    border:1px solid #cc0;
+    white-space:nowrap;
+    overflow: hidden;
+    background:#009900;
+}
+
+th.vertical{
+    padding:5px;
+    border:1px solid #cc0;
+    writing-mode: tb-rl;
+    filter: flipH flipV;
+    background:#fff;
+    text-align:center;
+    font-size:12px;
+    font-family:Arial;
+    height:200px;
+}

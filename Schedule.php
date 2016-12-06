@@ -12,27 +12,20 @@
         public $starts = array(32);
         public $ends = array(32);
 
-        // function __construct()
-        // {
-        //     //$this->countOfDisciplines = 0;
-        // }
-        
         public function addDisc($hours, $speciality, $typ, $name, $kurs1, $when, $strt, $end)
         {
-
             if (strrpos($name, ":"))
             {
-                $name = substr($name, strrpos($name, ":"));
+                $name = substr($name, 0, strrpos($name, ":"));
             }
-            $hour[$this->countOfDisciplines] = $hours;
-            $typs[$this->countOfDisciplines] = $typ;
-            $disc[$this->countOfDisciplines] = $name;
-            $kurs[$this->countOfDisciplines] = $kurs1;
-            $pair[$this->countOfDisciplines] = $when;
-            $starts[$this->countOfDisciplines] = $strt;
-            $ends[$this->countOfDisciplines] = $end;
-            $spec[$this->countOfDisciplines++] = $speciality;
-            $this->countOfDisciplines++;
+            $this->hour[$this->countOfDisciplines] = $hours;
+            $this->typs[$this->countOfDisciplines] = $typ;
+            $this->disc[$this->countOfDisciplines] = $name;
+            $this->kurs[$this->countOfDisciplines] = $kurs1;
+            $this->pair[$this->countOfDisciplines] = $when;
+            $this->starts[$this->countOfDisciplines] = $strt;
+            $this->ends[$this->countOfDisciplines] = $end;
+            $this->spec[$this->countOfDisciplines++] = $speciality;
         }
 
         function Remove($index)
@@ -40,15 +33,15 @@
             if ($index < 0) return;
             for ($i = $index; $i < $this->countOfDisciplines - 1; $i++)
             {
-                $hour[$i] = $this->hour[$i + 1];
-                $typs[$i] = $this->typs[$i + 1];
-                $disc[$i] = $this->disc[$i + 1];
-                $kurs[$i] = $this->kurs[$i + 1];
-                $pair[$i] = $this->pair[$i + 1];
-                $spec[$i] = $this->spec[$i + 1];
+                $this->hour[$i] = $this->hour[$i + 1];
+                $this->typs[$i] = $this->typs[$i + 1];
+                $this->disc[$i] = $this->disc[$i + 1];
+                $this->kurs[$i] = $this->kurs[$i + 1];
+                $this->pair[$i] = $this->pair[$i + 1];
+                $this->spec[$i] = $this->spec[$i + 1];
 
-                $starts[$i] = $this->starts[$i + 1];
-                $ends[$i] = $this->ends[$i + 1];
+                $this->starts[$i] = $this->starts[$i + 1];
+                $this->ends[$i] = $this->ends[$i + 1];
             }
             $this->countOfDisciplines--;
         }
@@ -261,8 +254,7 @@
                     if (substr($xr->getAttribute("time"), 4, 2) == "18") $wh = 7;
 
                     $denm = 1;
-                    if ($xr->getAttribute("denm") == true) $denm = 0;
-
+                    if ($xr->getAttribute("denm") == "true") $denm = 0;
                     $this->addDiscipline(
                         $dw, //day of week 1..6
                         2.0, //количество часов
@@ -277,9 +269,6 @@
                     );  //дата конца проведения дисциплины
                 }
             }
-            //var_dump($this->numerator);
-            //var_dump($this->denumerator);
-            
         }
     }   
 ?>
