@@ -94,22 +94,21 @@ class Program{
 
         function getInJournal($temp)
         {
-            if ($temp == 8) return 3;
-            if ($temp == 10) return 4;
-            if ($temp == 12) return 5;
-            if ($temp == 17) return 6;
-            if ($temp == 18) return 7;
-            if ($temp == 19) return 8;
-            if ($temp == 20) return 9;
-            if ($temp == 21) return 10;
-            if ($temp == 22) return 11;
-            if ($temp == 23) return 12;
-            if ($temp == 25) return 13;
-            if ($temp == 26) return 14;
-            if ($temp == 27) return 15;
-            if ($temp == 28) return 16;
-            if ($temp == 30) return 17;//
-           // if ($temp == 30) return 18;
+            if ($temp == 8)  return 3; //Лекция
+            if ($temp == 10) return 4; //Практики
+            if ($temp == 12) return 5; //Лаб. раб.
+            if ($temp == 17) return 6; //Консультации по дисциплины
+            if ($temp == 18) return 7; //Консультации перед экзаменом
+            if ($temp == 19) return 8; //Индивидуальные консультации
+            if ($temp == 20) return 9; //Зачеты
+            if ($temp == 21) return 10; //Экзамены
+            if ($temp == 22) return 11; //Контр. раб.
+            if ($temp == 23) return 12; //ГЭК/ГАК
+            if ($temp == 25) return 13; //Рук-во практиками
+            if ($temp == 26) return 14; //Курсовая работа
+            if ($temp == 27) return 15; //Рук-во дипломной работой
+            if ($temp == 28) return 16; //Магистранты
+            if ($temp == 30) return 17; //Аспиранты
             return 1;
         }
 
@@ -137,18 +136,23 @@ class Program{
             {
                 $E = $this->G->edges[$i];
 
-                if ($E->x == $this->G->source || $E->y == $this->G->dest || $E->y == $this->G->source || $E->x == $this->G->dest)
-                { continue; }
+                if ($E->x == $this->G->source || $E->y == $this->G->dest || $E->y == $this->G->source || $E->x == $this->G->dest) { 
+                    continue; 
+                }
                 if ($E->cap > 0)
                 {
                     $spec = $this->L->spect[$this->G->x_id[$E->y - 500]];
                     $name = $this->L->names[$this->G->x_id[$E->y - 500]];
                     $ind = $this->getInJournal($this->G->y_id[$E->y - 500]);
-                    $new_str = $spec.";".$name.";";
+                    
+                    /*echo $spec . "<br>";
+                    echo $name . "<br>";
+                    echo $this->G->y_id[$E->y - 500] . " " . $E->y . "<br>";*/
+                    
+                    $new_str = $spec . ";" . $name . ";";
                     $date_g = new DateTime();
                     $date_g->setTimeStamp($this->G->dates[$E->x - 1]);
-
-                    $key =  $date_g->format('d/m/Y')."_".$new_str;
+                    $key = $date_g->format('d/m/Y')."_".$new_str;
 
                     if (!array_key_exists($key, $D))
                     {   
@@ -194,20 +198,14 @@ class Program{
             $lastMonth = -1;
             foreach (array_keys($D) as $key)
             {
-                //var_dump(array_keys($D));
                 $at = $D[$key];
-                $index = strpos($key, '_');// key.IndexOf('_');
+                $index = strpos($key, '_');
                 $dat = str_replace("/", "-", substr($key, 0, $index));
-              //  var_dump($dat);
                 $now = new DateTime();
                 $now = $now->setTimestamp(strtotime($dat));
-              //  var_dump($now);
-
                 if ($lastMonth == -1)
                     $lastMonth = date('n', $now->getTimestamp);
-
-                //double[] at = D[key];
-				$ar = $D[$key];
+                $ar = $D[$key];
 
                 if (date('n', $now->getTimestamp) != $lastMonth && $lastMonth != -1)
                 {
@@ -217,7 +215,6 @@ class Program{
                     $lines .= "</td>";
 
                     $lines .= "<td>";
-                    #!!!!!!!!!!!!!!
                     $lines .= $this->monthName[date('n',$now) - 2];
                     $lines .= "</td>";
 
@@ -317,7 +314,4 @@ class Program{
         }
 }
 
-
-//}
-
- ?>
+?>

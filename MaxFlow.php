@@ -2,7 +2,6 @@
 
     class MaxFlow
     { 
-        //include 'Graph.php'; - ошибка
         const inf = 1000000000;
         const MAX = 2048;
         public $p = array(self::MAX);
@@ -57,7 +56,6 @@
                 $this->flag[$x] = 1;
                 for ($i = 0; $i < $this->G->a[$x]->size(); $i++)
                 {
-                  //  $E = new Edge();
                     $E = $this->G->edges[$this->G->a[$x]->a[$i]];
                     if ($this->dist[$E->y] > $this->dist[$E->x] + $E->cost + $this->D[$E->x] - $this->D[$E->y] && $E->cap > 0 && $this->flag[$E->y] == 0)
                     {
@@ -80,45 +78,17 @@
         private $qs = 0;
         private $qf = 0;
         
-        ///Перегрузка!!!
-        // function existPath($s, $d)
-        // {
-        //     for ($i = 0; $i < self::MAX; $i++)
-        //     {
-        //         $flag[$i] = 0;
-        //         $p[$i] = 0;
-        //     }
-        //     $qs = $qf = 0;
-        //     $q[$qf++] = $s;
-        //     while ($qs != $qf)
-        //     {
-        //         $x = $q[$qs++];
-        //         for ($i = 0; $i < $G->a[$x].size(); $i++)
-        //         {
-        //             $E = new Edge();
-        //             $E = $G->edges[$G->a[$x]->a[$i]];
-        //             if ($E->cap <= 0) continue;
-        //             if ($flag[$E->y] == 0)
-        //             {
-        //                 $flag[$E->y] = 1;
-        //                 $p[$E->y] = $G->a[$x]->a[$i];
-        //                 $q[$qf++] = $E->y;
-        //             }
-        //         }
-        //     }
-        //     return ($flag[$d] == 1);
-        // }
-
         function Aug($x, $y, $z)
         {
             while ($x != $y)
             {
+                //echo "Flow: " . $this->G->edges[$this->p[$x]]->y . " " . $z . "<br>";
                 $this->G->edges[$this->p[$x]]->cap -= $z;
                 $this->G->edges[$this->G->edges[$this->p[$x]]->reverse]->cap += $z;
-//                $E = new Edge();
                 $E = $this->G->edges[$this->p[$x]];
                 $x = $E->x;
             }
+            //echo $y . "<br>";
         }
 
         function findMin($x, $y)
@@ -126,7 +96,6 @@
             $MIN = 1000000000;
             while ($x != $y)
             {
-//                $E = new Edge();
                 $E = $this->G->edges[$this->p[$x]];
                 if ($MIN > $E->cap) $MIN = $E->cap;
                 $x = $E->x;

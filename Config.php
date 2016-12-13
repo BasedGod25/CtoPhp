@@ -23,9 +23,9 @@
             $this->e4 = new DateTime();
 
             $this->s1->setDate(date("Y"), 9, 1);
-            $this->e1->setDate(date("Y"), 10, 31);
+            $this->e1->setDate(date("Y"), 12, 31);
             $this->s4->setDate(date("Y"), 9, 1);
-            $this->e4->setDate(date("Y"), 10, 31);
+            $this->e4->setDate(date("Y"), 12, 31);
         }
 
         function LoadFromFile($fileName)
@@ -102,9 +102,9 @@
             if ($S =="Autumn")
             {
                 $this->s1->setDate(date("Y"), 9, 1);
-				$this->e1->setDate(date("Y"), 10, 31);
+				$this->e1->setDate(date("Y"), 12, 31);
                 $this->s4->setDate(date("Y"), 9, 1);
-                $this->e4->setDate(date("Y"), 10, 31);
+                $this->e4->setDate(date("Y"), 12, 31);
             }
             else
             {
