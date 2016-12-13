@@ -1,18 +1,18 @@
 <?php
-class Vertice{
+class Vertice {
 
-	 public $MAX_NUMBER_OF_NEIGHBOURS = 2048;
+	public $MAX_NUMBER_OF_NEIGHBOURS = 2048;
 	public $count;
 	public $a;
 
 	function __construct(){
          $this->count = 0;
          $this->a = array($this->MAX_NUMBER_OF_NEIGHBOURS);
-     }
+    }
 
-	public function size(){
-         return $this->count;
-     }
+        public function size(){
+        return $this->count;
+    }
 
     public function push_back($x){
         $this->a[$this->count++] = $x;
@@ -38,13 +38,10 @@ class Graph {
     public $source;
 
     public $MAX_NUMBER_OF_VERTICES = 2048;
-
     public $count_of_edges;
     public $id = array(array(64),array(64));
-
     public $x_id = array(2048);
     public $y_id = array(2048);
-
     public $edges;
     public $D;
 
@@ -53,7 +50,7 @@ class Graph {
 
     public $a = array(2048);
 
-    public function __construct(){
+    public function __construct() {
         $this->count_of_edges = 0;
         $this->source = 0;
         $this->dest = 2000;
@@ -64,16 +61,14 @@ class Graph {
         }
     }
 
-    private function clear(){
+    private function clear() {
         $this->count_of_edges = 0;
     }
 
     public function addEdge($x, $y, $cap, $cost){
         if ($this->a[$x] == null) $this->a[$x] = new Vertice();
         if ($this->a[$y] == null) $this->a[$y] = new Vertice();
-
-		if ($cap == null) $cap = 100;
-
+        if ($cap == null) $cap = 100;
 
         $this->a[$x]->push_back($this->count_of_edges);
         $this->edges[$this->count_of_edges] = new Edge($x, $y, $cap, $cost, $this->count_of_edges + 1);
@@ -85,29 +80,27 @@ class Graph {
    	}
 
 	private function DayOfWeek2Int($d){
-		$d = date_timestamp_get($d);
-		if (date("w", $d)>=0 && date("w",$d) < 7){
-
-				if (date("w", $d) == 7){
-					return 0;
-				}
-				else 
-					return date("w",$d)+1;
-			}
-			else return -1;
+            $d = date_timestamp_get($d);
+            if (date("w", $d)>=0 && date("w",$d) < 7) {
+                if (date("w", $d) == 7){
+                    return 0;
+                }
+                else 
+                    return date("w",$d)+1;
+            }
+            else return -1;
 	}
 
 	private function FindDay($date1){
-		$date = $date1->getTimestamp();
-		for($i = 0; $i < $this->countOfDates; $i++) {
-			if($date === $this->dates[$i]) {
+            $date = $date1->getTimestamp();
+            for($i = 0; $i < $this->countOfDates; $i++) {
+                if($date === $this->dates[$i]) {
+                    return $i;
+                }
+            }
 
-				return $i;
-			}
-		}
-
-		$this->dates[$this->countOfDates++] = $date;
-		return $this->countOfDates - 1;
+            $this->dates[$this->countOfDates++] = $date;
+            return $this->countOfDates - 1;
 	}
 
 	public function date2int($date){

@@ -310,13 +310,10 @@ class Program{
                 $this->L->isAutumn = false;
             }
 
-            //var_dump($this->L->isAutumn);
-
             $this->S->LoadFromXML($this->path.$ScheduleFile);
             $this->L->LoadFromXML($this->path.$LoadFile);
 
-            //FillExcel();
-            $this->Fill();
+            return $this->Fill();
         }
 }
 

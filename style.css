@@ -3,7 +3,6 @@ table.example{
     font-family:Arial;
     font-size:12px;
     border-collapse:collapse;
-//table-layout:fixed;
 }
 table.example td{
     padding:5px;
