@@ -71,7 +71,7 @@ th.vertical{
 
 <body onload="GetVerticalLayout()">
 
-<center><a href="Temp.xltx">Excel версия журнала</a></center>
+<center><a href="distribution.xlsx">Excel версия журнала</a></center>
 
 <?php
 $sem = $_POST['sem1'];

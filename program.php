@@ -9,6 +9,9 @@ class Program{
     public $monthName = array("JANUARU", "FABRUARY", "MARCH", "APRIL", 
                                   "MAY", "JUNE", "JULY", "AUGUST", 
                                   "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER");
+	
+	public $letters = array("C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S");
+								  
     function __construct(){
         $this->S = new Schedule();
         $this->L = new Load(true);
@@ -131,7 +134,14 @@ class Program{
             $lines = "";
             $D = array();
 
+			$outputFileName = './distribution.xlsx';
+			$inputFileName = './Temp.xltx';
 
+			//$objPHPExcel = new PHPExcel();
+			$objPHPExcel = PHPExcel_IOFactory::load($inputFileName);
+			$fileType = 'Excel2007';
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, $fileType);
+			$row = 1;
             for ($i = $this->G->count_of_edges - 1; $i >= 1; $i -= 2)
             {
                 $E = $this->G->edges[$i];
@@ -231,12 +241,15 @@ class Program{
                     $lines .= "<td>".$total_in_month."</td>";
                 }
 
+				$row++;
                 $lines .= "<tr>";
                 $lines .= "<td>";
                 $lines .= substr($key, 0, $index);
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, $row, substr($key, 0, $index));
                 $lines .= "</td>";
 
                 $lines .= "<td>";
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $row, substr($key, $index + 1, strlen($key) - $index - 1));
                 $lines .= substr($key, $index + 1, strlen($key) - $index - 1);
                 $lines .= "</td>";
 
@@ -246,15 +259,23 @@ class Program{
                     $totas[$j + 3] += $at[$j + 3];
                     $total_month[$j + 3] += $at[$j + 3];
                     $total += $at[$j + 3];
-                    if ($at[$j + 3] != 0)
+                    if ($at[$j + 3] != 0) {
                         $lines .= "<td>".$at[$j + 3]."</td>";
+						$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j + 2, $row, $at[$j + 3]);
+					}
                     else
                         $lines .= "<td></td>";
                 }
                 $lines .= "<td>".$total."</td>";
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j + 2, $row, "=SUM(C" . $row. ":R" . $row . ")");
             }
 
-            $lines .= '<tr class=\"total\">';
+			for($i = 0; $i < 17; $i++) {
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($i + 2, $row + 1, "=SUM(" . $this->letters[$i] . 1 . ":" . $this->letters[$i] . $row . ")");
+				$objPHPExcel->getActiveSheet()->getColumnDimension($this->letters[$i])->setWidth(5);
+			}
+
+			$lines .= '<tr class=\"total\">';
             $lines .= "<td>"."TOTAL IN ";
             $lines .= "</td>";
 
@@ -287,6 +308,9 @@ class Program{
             $lines .= "<td>".$totty."</td>";
             $lines .= "</tr>";
             $lines .= "</table>";
+			$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(11);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(45);
+			$objWriter->save($outputFileName);
             return $lines;
         }
 
