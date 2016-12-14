@@ -206,6 +206,9 @@ class Program{
     <th class=\"vertical\" style=\"width: 30px;\">Всего</th>
     </thead>";
             $lastMonth = -1;
+			$subjects = array(256);
+			$subjectsCount = 0;
+			
             foreach (array_keys($D) as $key)
             {
                 $at = $D[$key];
@@ -252,6 +255,16 @@ class Program{
 				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $row, substr($key, $index + 1, strlen($key) - $index - 1));
                 $lines .= substr($key, $index + 1, strlen($key) - $index - 1);
                 $lines .= "</td>";
+				
+				$flag = false;
+				for($hl = 0; $hl < $subjectsCount; $hl++) {
+					if(substr($key, $index + 1, strlen($key) - $index - 1) == $subjects[$hl]) {
+						$flag = true; break;
+					}
+				}
+				if(!$flag) {
+					$subjects[$subjectsCount++] = substr($key, $index + 1, strlen($key) - $index - 1);
+				}
 
                 $total = 0.0;
                 for ($j = 0; $j < 16; $j++)
@@ -310,6 +323,16 @@ class Program{
             $lines .= "</table>";
 			$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(11);
 			$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(45);
+			$lastRow = $row;
+			$row += 5;
+			for($hl = 0; $hl < $subjectsCount; $hl++) {
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $row, $subjects[$hl]);
+				for($lt = 0; $lt < 17; $lt++) {
+					$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($lt + 2, $row, "=SUMIF(B2:B" . $lastRow . ",\"" . $subjects[$hl] . "\"," . $this->letters[$lt] . "2:" . $this->letters[$lt] . $lastRow . ")");
+				}
+				$row++;
+			}
+			
 			$objWriter->save($outputFileName);
             return $lines;
         }
