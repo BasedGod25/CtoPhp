@@ -83,10 +83,10 @@ class Graph {
         $d = date_timestamp_get($d);
         if (date("w", $d)>=0 && date("w",$d) < 7) {
             if (date("w", $d) == 7){
-                return 0;
+                return 6;
             }
             else 
-                return date("w",$d)+1;
+                return date("w",$d);
         }
         else return -1;
     }

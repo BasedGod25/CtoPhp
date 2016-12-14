@@ -173,7 +173,7 @@ class Program{
             $total_month = array(256);
 
             $lines .= '<link rel="stylesheet" href="style.css">';
-            $lines .= "<table>";
+            $lines .= "<table class=\"example\">";
             $lines .="    <thead>
     <th class=\"vertical\" style=\"width: 50px;\">Дата</th>
     <th class=\"vertical\" style=\"width: 300px;\">Специальность</th>
