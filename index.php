@@ -11,7 +11,7 @@ function trySend() {
 
 <body>
     
-    <center><h1>Заполнения журнала учета рабочего времени преподавателя</h1></center>
+    <center><h1>Заполнение журнала учета рабочего времени преподавателя</h1></center>
     <form name="raba" action="load.php" method="post" enctype="multipart/form-data">
         <table>
             <tr><td>1.</td><td>Для заполнения журнала учета рабочего времени необходим файл нагрузки в формате Excel</td><td></td></tr>
