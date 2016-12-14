@@ -34,7 +34,10 @@ function trySend() {
             </td></tr>
             <!--<input type="hidden" name="passwd"/>-->
             <tr><td><br></td></tr>
-            <tr><td>5.</td><td>Перейдите к составлению расписания: </td><td><input type="button" value="Send" onclick="trySend();" /></td></tr>
+			
+            <tr><td>5.</td><td>Выберите семестр: </td><td><select name="semestr" id="semestr"><option>Autumn</option><option>Spring</option></select></td></tr>
+			<tr><td><br></td></tr>
+            <tr><td>6.</td><td>Перейдите к составлению расписания: </td><td><input type="button" value="Send" onclick="trySend();" /></td></tr>
         </table>
     </form>
 </body>

@@ -101,7 +101,7 @@ for($i = 2; $i < count($sheetData); $i++) {
 $dom->save("./example.xml");
 if($sem == "Autumn") {
     error_reporting(E_ERROR | E_WARNING | E_PARSE);
-    include 'Config.php';
+    include 'config.php';
     include 'Graph.php';
     include 'Loads.php';
     include 'MaxFlow.php';

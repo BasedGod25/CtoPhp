@@ -14,13 +14,13 @@
         } else {
         }
         echo $uploadfile;
-        header('Location: sched.php?semestr=Autumn&nams=' . $upd);
+        header('Location: sched.php?semestr=' . $_POST['semestr'] . '&nams=' . $upd);
     } else {
         $ind = strpos($_POST['sweet'], '.');
         $upd = substr($_POST['sweet'], 0, $ind);
         if (copy('./loads/' . $upd . '.xlsx', './example.xlsx')) {
         } else {
         }
-        header('Location: sched.php?semestr=Autumn&nams=' . $upd);
+        header('Location: sched.php?semestr=' . $_POST['semestr'] . '&nams=' . $upd);
     }
 ?>
